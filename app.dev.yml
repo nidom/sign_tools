@@ -1,0 +1,25 @@
+PORT: 3001
+
+# 数据库配置
+datasource:
+  driverName: mysql
+  host: 8.217.61.63
+  port: 8020
+  database: aws_bill
+  username: aws_bill
+  password: Kw3EnAEMZS57W6Gr
+  charset: utf8mb4
+  loc: Asia/Shanghai
+  logging: false
+
+redis:
+  
+  #测试服务器
+  host: 8.217.61.63
+  port: 6380
+  password: nidom2012
+
+
+
+
+

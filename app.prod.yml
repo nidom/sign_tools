@@ -1,0 +1,21 @@
+PORT: 3001
+
+# 数据库配置
+datasource:
+  driverName: mysql
+  host: 172.18.131.133
+  port: 8020
+  database: cloud
+  username: cloud
+  password: dmJTKBDkEAKbxBnC
+  charset: utf8mb4
+  loc: Asia/Shanghai
+  logging: false
+
+
+#reids
+redis:
+  host: 8.217.61.63
+  port: 6380
+  password: dhsz110
+
