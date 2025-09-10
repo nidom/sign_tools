@@ -38,7 +38,6 @@ export class CommonController {
 
         return await this.commonService.redis_key_value(requestDto.params, request);
     }
-
     
     @Post('send_msg_to_tg')
     async sendMsgToTg(@Body() requestDto: RequestDto, @Req() request: Request): Promise<any> {
@@ -52,7 +51,5 @@ export class CommonController {
         return await this.commonService.deleteAllTables(requestDto.params, request);
     }
     
-
-
 
 }

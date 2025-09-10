@@ -1,6 +1,3 @@
-import { SignModule } from './sign_api/sign.module';
-import { SignService } from './sign_api/udid_monitor.service';
-import { SignController } from './sign_api/sign.controller';
 import { CommonModule } from './common_api/common.module';
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +6,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { APP_CONFIG } from './utils';
 import { AwsBillModule } from './aws_api/aws_bill.module';
+import { SignModule } from './sign_api/sign.module';
 let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
@@ -53,17 +51,11 @@ let mySqlModule = TypeOrmModule.forRootAsync({
   ],
 
   controllers: [
-    SignController,
 
 
   ],
   providers: [
-    SignService,
-
-
-
-
-
+    
     {
       provide: APP_INTERCEPTOR,
       useClass: ApiInterceptor,

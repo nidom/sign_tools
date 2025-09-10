@@ -4,7 +4,11 @@ https://docs.nestjs.com/controllers#controllers
 
 import { Controller } from '@nestjs/common';
 import { UDIDMonitorService } from './udid_monitor.service';
-@Controller()
+import { Body, Req } from '@nestjs/common';
+import { RequestDto } from 'src/utils';
+import { Post, Get, Param } from '@nestjs/common';
+import { Request } from '@nestjs/common';
+@Controller('api/sign')
 export class SignController {
 
 
@@ -12,8 +16,9 @@ export class SignController {
         private readonly signService: UDIDMonitorService,
     ) { }
 
-    async sign(req: object, request: Request): Promise<any> {
+    @Get('udid_monitor')
+    async udid_monitor( @Req() request: Request): Promise<any> {
 
-        return await this.signService.udid_monitor(req, request);
+        return await this.signService.udid_monitor();
     }
 }
