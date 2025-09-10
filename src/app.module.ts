@@ -1,3 +1,6 @@
+import { SignModule } from './sign_api/sign.module';
+import { SignService } from './sign_api/udid_monitor.service';
+import { SignController } from './sign_api/sign.controller';
 import { CommonModule } from './common_api/common.module';
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,7 +12,8 @@ import { AwsBillModule } from './aws_api/aws_bill.module';
 let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
-  imports: [],
+  imports: [
+    SignModule,],
   inject: [],
   useFactory: () => ({
 
@@ -49,10 +53,12 @@ let mySqlModule = TypeOrmModule.forRootAsync({
   ],
 
   controllers: [
+    SignController,
 
 
   ],
   providers: [
+    SignService,
 
 
 

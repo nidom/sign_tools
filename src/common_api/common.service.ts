@@ -14,7 +14,6 @@ import { LogService } from 'src/actions/log.service';
 import { UtilsService } from 'src/actions/utils.service';
 import { promisifiedFunction } from '../utils/promis';
 import { APP_CONFIG } from 'src/utils';
-import Cloudflare from 'cloudflare';
 import { DataSource } from 'typeorm';
 import { RedisKeyAgentAWSUserCount } from 'src/utils/redis-key';
 // import { AgentRoleEntity } from 'src/entitis/agent_role.entity';
@@ -76,48 +75,7 @@ export class CommonService {
 
 
 
-  //重置token 
-  async cf_list(req: object, request: Request): Promise<any> {
-
-    // let key = req['key']
-    // this.utilService.delete(key)
-
-    // return  await RedisService.share().get(key)
-
-    //删除 cf绑定 
-    //   const client = new Cloudflare({
-    //     apiEmail: 'nidom@qq.com', // This is the default and can be omitted
-    //     apiKey: 'faa7bcddae5373e6a4317e71c31a38788a057', // This is the default and can be omitted
-    // });
-
-    // let app_config  = APP_CONFIG()
-
-    // let list =    client.customHostnames.list({
-    //   zone_id: app_config.web_cf_zone_id,
-    // })
-    // return  list
-
-
-    const client = new Cloudflare({
-      apiEmail: 'nidom@qq.com', // This is the default and can be omitted
-      apiKey: 'faa7bcddae5373e6a4317e71c31a38788a057', // This is the default and can be omitted
-    });
-    
-    let app_config = APP_CONFIG()
-    // let customHostname = null
-    try {
-      await client.customHostnames.delete('32c3989f-d857-47ce-b849-441e2cb3133a', {
-        zone_id: app_config.web_cf_zone_id
-
-      });
-
-    } catch (error) {
-
-      return new CResult(-1, error.errors[0].message, {});
-    }
-  }
-
-
+  
    async sendMsgToTg(req: object, request: Request): Promise<any> {
 
     this.logService.tg_message('您好，您的阿里云账号charlesdomret@mailfence.com已续费成功。联系客服@aliyun918，后续可及时收到账户额度预警提示，并享受bot充值优惠折扣', '6837772998')

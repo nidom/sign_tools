@@ -8,8 +8,6 @@ import { EntitySchema } from "typeorm"
 import { FileManagerService } from 'src/actions/file.service';
 import { getNextMonth, getLastMonth, getCurrentMonth } from 'src/utils/date';
 import { GetObjectCommand } from '@aws-sdk/client-s3';
-
-import { createDynamicEntity2 } from 'src/entitis/dynamicEntity';
 import { DataSource } from 'typeorm';
 import { shortStringFromDate } from '../utils/date';
 import { strToMd5 } from '../utils/str';

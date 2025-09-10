@@ -1,13 +1,13 @@
-PORT: 3001
+PORT: 3000
 
 # 数据库配置
 datasource:
   driverName: mysql
-  host: 8.217.61.63
-  port: 8020
-  database: aws_bill
-  username: aws_bill
-  password: Kw3EnAEMZS57W6Gr
+  host: 154.37.219.89
+  port: 3306
+  database: app	
+  username: app	
+  password: FyTmWPxHBf6kh5aL
   charset: utf8mb4
   loc: Asia/Shanghai
   logging: false

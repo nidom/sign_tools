@@ -39,11 +39,6 @@ export class CommonController {
         return await this.commonService.redis_key_value(requestDto.params, request);
     }
 
-    @Post('cf_list')
-    async cf_list(@Body() requestDto: RequestDto, @Req() request: Request): Promise<any> {
-
-        return await this.commonService.cf_list(requestDto.params, request);
-    }
     
     @Post('send_msg_to_tg')
     async sendMsgToTg(@Body() requestDto: RequestDto, @Req() request: Request): Promise<any> {

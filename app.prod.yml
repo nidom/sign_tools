@@ -1,13 +1,13 @@
-PORT: 3001
+PORT: 3000
 
 # 数据库配置
 datasource:
   driverName: mysql
-  host: 172.18.131.133
-  port: 8020
-  database: cloud
-  username: cloud
-  password: dmJTKBDkEAKbxBnC
+  host: 154.37.219.89
+  port: 3306
+  database: app
+  username: app
+  password: FyTmWPxHBf6kh5aL
   charset: utf8mb4
   loc: Asia/Shanghai
   logging: false
