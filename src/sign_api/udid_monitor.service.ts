@@ -23,8 +23,8 @@ export class UDIDMonitorService {
 
         @Inject(LogService)
         private readonly logService: LogService,
-
-        private udids = []
+        // private  udids = []
+    
   
     ) { }
 
@@ -118,10 +118,10 @@ export class UDIDMonitorService {
 
     if(isEmpty(record.cert_iss)){
 
-      if(!this.udids.includes(record.udid)){
-        this.udids.push(record.udid);
-        this.logService.warning(record.udid);
-      }
+      // if(!this.udids.includes(record.udid)){
+      //   this.udids.push(record.udid);
+      //   this.logService.warning(record.udid);
+      // }
 
   
       //警告
