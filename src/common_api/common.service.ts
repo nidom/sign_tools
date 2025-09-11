@@ -76,10 +76,7 @@ export class CommonService {
 
 
   
-   async sendMsgToTg(req: object, request: Request): Promise<any> {
 
-    this.logService.tg_message('您好，您的阿里云账号charlesdomret@mailfence.com已续费成功。联系客服@aliyun918，后续可及时收到账户额度预警提示，并享受bot充值优惠折扣', '6837772998')
-   }
 
 
    //删除所有表格
