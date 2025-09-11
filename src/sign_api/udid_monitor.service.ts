@@ -15,7 +15,8 @@ const fs = require('fs');
 
 @Injectable()
 export class UDIDMonitorService {
-
+ 
+    public udids = []
     constructor(
       
         @InjectRepository(SuperSignEntity)
@@ -23,10 +24,19 @@ export class UDIDMonitorService {
 
         @Inject(LogService)
         private readonly logService: LogService,
+
         // private  udids = []
+
+        // public udids = []
     
   
-    ) { }
+    ) { 
+  
+
+
+
+
+    }
 
     async udid_monitor(): Promise<any> {
       
@@ -118,10 +128,10 @@ export class UDIDMonitorService {
 
     if(isEmpty(record.cert_iss)){
 
-      // if(!this.udids.includes(record.udid)){
-      //   this.udids.push(record.udid);
-      //   this.logService.warning(record.udid);
-      // }
+      if(!this.udids.includes(record.udid)){
+        this.udids.push(record.udid);
+        this.logService.warning(record.udid);
+      }
 
   
       //警告
