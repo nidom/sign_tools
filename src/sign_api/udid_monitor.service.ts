@@ -12,7 +12,6 @@ import { LogService } from 'src/actions/log.service';
 import { Inject } from '@nestjs/common';
 const fs = require('fs');
 
-const parse = require('mobileprovision-parse');
 
 @Injectable()
 export class UDIDMonitorService {
