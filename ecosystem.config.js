@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: "sign_tools",
     script: "dist/main.js",
-    instances: "2",
+    instances: "1",
     exec_mode: "cluster",
     max_memory_restart: "6G", // 增加到 4GB
     log_rotate: true,        // 启用日志轮转

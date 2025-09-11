@@ -27,9 +27,8 @@ export class UDIDMonitorService {
     ) { }
 
     async udid_monitor(): Promise<any> {
-
-        
-        
+      
+      
     const latestRecords = await this.superUDIDRepository.find({
         order: { id: 'DESC' },
         take: 3
