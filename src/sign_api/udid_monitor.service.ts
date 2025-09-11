@@ -23,6 +23,8 @@ export class UDIDMonitorService {
 
         @Inject(LogService)
         private readonly logService: LogService,
+
+        private udids = []
   
     ) { }
 
@@ -113,9 +115,14 @@ export class UDIDMonitorService {
     const record = await this.superUDIDRepository.findOne({
       where: { id: id },
     });
+
     if(isEmpty(record.cert_iss)){
 
-       this.logService.warning(record.udid);
+      if(!this.udids.includes(record.udid)){
+        this.udids.push(record.udid);
+        this.logService.warning(record.udid);
+      }
+
   
       //警告
       // return { code: -1, message: '未找到对应数据' };
