@@ -121,7 +121,7 @@ export class UDIDMonitorService {
   
  
     //延迟5s后重试
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 50000));
     const record = await this.superUDIDRepository.findOne({
       where: { id: id },
     });
