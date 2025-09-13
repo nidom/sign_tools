@@ -78,6 +78,7 @@ export class UDIDMonitorService {
     if(!record){
       return "没有找到这台设备"
     }
+    console.log(record.udid);
 
     let result = await this.udid_check(record);
 
@@ -111,7 +112,7 @@ export class UDIDMonitorService {
 
         // });
         provisioning( filePath, ( parseError, provisionData ) => {
-          // console.log( provisionData );
+           console.log( provisionData );
 
           let udids = provisionData.ProvisionedDevices;
           if(udids.includes(record.udid)){
