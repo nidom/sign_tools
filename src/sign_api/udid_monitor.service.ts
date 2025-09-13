@@ -11,7 +11,8 @@ import { isEmpty } from 'class-validator';
 import { LogService } from 'src/actions/log.service';
 import { Inject } from '@nestjs/common';
 const fs = require('fs');
-const provisioning = require('provisioning');
+// const provisioning = require('provisioning');
+const parse = require('mobileprovision-parse');
 
 
 @Injectable()
@@ -89,15 +90,30 @@ export class UDIDMonitorService {
 
 
         let filePath = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}/${mobileprovisionFile}`;
-        provisioning(filePath, (err, obj) => {
-          if (err) {
-            console.error('Error reading the mobileprovision file:', err);
-            return;
-          }
+        // provisioning(filePath, (err, obj) => {
+        //   if (err) {
+        //     console.error('Error reading the mobileprovision file:', err);
+        //     return;
+        //   }
           
-          console.log('UUID:', obj.UUID);
+        //   console.log('UUID:', obj.UUID);
 
-        });
+        // });
+
+
+
+        parse(filePath)
+  .then(info => {
+    console.log('解析结果:', info);
+    
+    // 常用字段
+    console.log('UUID:', info.UUID);
+
+  })
+  .catch(error => {
+    console.error('解析失败:', error);
+  });
+
 
 
 
