@@ -81,6 +81,7 @@ export class UDIDMonitorService {
     console.log(record.udid);
 
     let result = await this.udid_check(record);
+    console.log(result);
 
     if(result){
        return "卡设备了"
