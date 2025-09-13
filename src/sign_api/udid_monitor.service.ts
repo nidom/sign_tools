@@ -51,7 +51,7 @@ export class UDIDMonitorService {
 
       if(isEmpty(record.cert_iss)){
 
-        await this.udid_check(record.udid);
+        await this.udid_check(record);
       }
     }
 
@@ -61,17 +61,18 @@ export class UDIDMonitorService {
     // });
 
 
+
+
   
   }
 
   
-  async udid_check(udid: string): Promise<any> {
+  async udid_check(record: SuperSignEntity): Promise<any> {
   
 
 
-    let dircetory = `/www/wwwroot/iosxapp.com/data/udidcert/${udid}`;
-
-
+    let dircetory = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}`;
+  
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {

@@ -1,6 +1,6 @@
 import { SharedEntity} from "src/general/base.entity";
 import { Entity, Column, Index } from 'typeorm';
-@Entity('ff_super_sign')
+@Entity('ff_super_device')
 export class  SuperSignEntity extends SharedEntity {
 
   @Column({ length: 50, comment: 'udid' })
@@ -9,6 +9,5 @@ export class  SuperSignEntity extends SharedEntity {
   @Column({ length: 200, comment: 'udid' })
   cert_iss: string;
 
-
-
+  
 }
