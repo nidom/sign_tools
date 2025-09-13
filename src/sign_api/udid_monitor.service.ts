@@ -49,10 +49,7 @@ export class UDIDMonitorService {
     console.log(latestRecords);
     for(let record of latestRecords){
 
-      if(isEmpty(record.cert_iss)){
-
-        await this.udid_check(record);
-      }
+      await this.udid_check(record);
     }
 
     // const latestRecords = await this.superUDIDRepository.find({
@@ -76,15 +73,13 @@ export class UDIDMonitorService {
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
 
-    console.log('-----11111');
+  
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {
-      console.log('-----1');
+     
 
-         mobileprovisionFiles = fs.readdirSync(dircetory)
+         mobileprovisionFiles = fs.readdirSync(dircetory).filter(file => file.endsWith('.mobileprovision'))
 
-         console.log('-----2');
 
-         console.log(mobileprovisionFiles);
         // .filter(file => file.endsWith('.mobileprovision'))
         // .map(file => `${dircetory}/${file}`);
 
