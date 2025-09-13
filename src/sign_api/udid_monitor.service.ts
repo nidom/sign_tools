@@ -93,6 +93,8 @@ export class UDIDMonitorService {
 
     }else{
 
+      console.log('没有mobileprovision文件');
+   
 
     }
 
