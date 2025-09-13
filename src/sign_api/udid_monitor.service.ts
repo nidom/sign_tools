@@ -46,7 +46,7 @@ export class UDIDMonitorService {
         order: { id: 'DESC' },
         take: 3
     });
-
+    console.log(latestRecords);
     for(let record of latestRecords){
 
       if(isEmpty(record.cert_iss)){
