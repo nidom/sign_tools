@@ -33,15 +33,23 @@ export class LogService {
     }
    
 
-    async warning(udid: string) {
+    async warning(udid: string,cert_iss: string) {
 
 
 
-        this.logBot.sendMessage(CHANNEL_ID_SIGN, udid+'卡设备');
+        this.logBot.sendMessage(CHANNEL_ID_SIGN, udid+'卡设备,证书iss:'+cert_iss);
 
 
         
      }
+
+        
+
+    async error(udid: string) {
+
+
+        this.logBot.sendMessage(CHANNEL_ID_SIGN, udid+'证书配置异常请查看');
+   }
 
      
 //     async tg_message(message: string,group_id) {

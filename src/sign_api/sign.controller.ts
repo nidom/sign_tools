@@ -21,4 +21,10 @@ export class SignController {
 
         return await this.signService.udid_monitor();
     }
+
+    @Get('udid_check:/udid')
+    async udid_check( @Param('udid') udid: string, @Req() request: Request): Promise<any> {
+
+        return await this.signService.udid_test(udid);
+    }
 }
