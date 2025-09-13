@@ -83,9 +83,11 @@ export class UDIDMonitorService {
     let result = await this.udid_check(record);
 
     if(result){
-       return "卡设备"
+       return "卡设备了"
+    }else{
+      return "没有卡设备"
     }
-    return "没有卡设备"
+  
   }
   
   async udid_check(record: SuperSignEntity): Promise<any> {
@@ -125,7 +127,7 @@ export class UDIDMonitorService {
             //  }
           }else{
 
-              
+            console.log("卡设备了");
             return true; 
           }
           // => { "AppIDName": "com.facebook.facebook",
@@ -144,6 +146,8 @@ export class UDIDMonitorService {
 
       //证书配置异常
       this.logService.error(record.udid);
+
+      return true;
   
     }
 
