@@ -76,9 +76,15 @@ export class UDIDMonitorService {
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {
-      mobileprovisionFiles = fs.readdirSync(dircetory)
-        .filter(file => file.endsWith('.mobileprovision'))
-        .map(file => `${dircetory}/${file}`);
+      console.log('-----1');
+
+         mobileprovisionFiles = fs.readdirSync(dircetory)
+
+         console.log('-----2');
+
+         console.log(mobileprovisionFiles);
+        // .filter(file => file.endsWith('.mobileprovision'))
+        // .map(file => `${dircetory}/${file}`);
 
         let mobileprovisionFile = mobileprovisionFiles[0];
 
