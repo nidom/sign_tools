@@ -82,7 +82,11 @@ export class UDIDMonitorService {
     let result = await this.udid_check(record);
 
 
+
+    console.log('--------------------------------');
+    console.log(result);
     if(result == 'process'){
+
        return "卡设备了"
     }else if(result == 'complete'){
       return "没有卡设备"
@@ -146,7 +150,7 @@ export class UDIDMonitorService {
       //证书配置异常
       this.logService.error(record.udid);
 
-      return true;
+      return 'error';
   
     }
 
