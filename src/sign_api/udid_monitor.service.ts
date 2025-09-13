@@ -75,6 +75,8 @@ export class UDIDMonitorService {
   
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
+
+    console.log('-----11111');
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {
       console.log('-----1');
 
@@ -98,7 +100,7 @@ export class UDIDMonitorService {
 
 
     }else{
-
+      console.log('-----22222');
       console.log('没有mobileprovision文件');
    
 
