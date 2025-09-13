@@ -87,10 +87,24 @@ export class UDIDMonitorService {
 
         console.log(mobileprovisionFile);
 
-        let mobileprovision = provisioning.parse(mobileprovisionFile);
 
-        let uuid = mobileprovision.UUID;
-        console.log(uuid);
+        let filePath = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}/${mobileprovisionFile}`;
+        provisioning(filePath, (err, obj) => {
+          if (err) {
+            console.error('Error reading the mobileprovision file:', err);
+            return;
+          }
+          
+          console.log('UUID:', obj.UUID);
+
+        });
+
+
+
+        // let mobileprovision = provisioning.parse(mobileprovisionFile);
+
+        // let uuid = mobileprovision.UUID;
+        // console.log(uuid);
 
 
 
