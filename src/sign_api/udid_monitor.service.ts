@@ -74,6 +74,11 @@ export class UDIDMonitorService {
     let record = await this.superUDIDRepository.findOne({
       where: { udid: udid }
     });
+
+    if(!record){
+      return "没有找到这台设备"
+    }
+
     let result = await this.udid_check(record);
 
     if(result){
