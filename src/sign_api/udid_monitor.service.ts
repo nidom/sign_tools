@@ -12,8 +12,9 @@ import { LogService } from 'src/actions/log.service';
 import { Inject } from '@nestjs/common';
 const fs = require('fs');
 // const provisioning = require('provisioning');
-const parse = require('mobileprovision-parse');
+// const parse = require('mobileprovision-parse');
 
+const provisioning = require( '@stendahls/provision-parse' );
 
 @Injectable()
 export class UDIDMonitorService {
@@ -99,20 +100,15 @@ export class UDIDMonitorService {
         //   console.log('UUID:', obj.UUID);
 
         // });
+        provisioning( filePath, ( parseError, provisionData ) => {
+          console.log( provisionData );
+          // => { "AppIDName": "com.facebook.facebook",
+          //      "TeamName": "Facebook Inc.",
+          //      ... }
+      } );
 
 
 
-        parse(filePath)
-  .then(info => {
-    console.log('解析结果:', info);
-    
-    // 常用字段
-    console.log('UUID:', info.UUID);
-
-  })
-  .catch(error => {
-    console.error('解析失败:', error);
-  });
 
 
 
