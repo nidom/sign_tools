@@ -94,9 +94,12 @@ export class UDIDMonitorService {
   
   }
   
+
+
   async udid_check(record: SuperSignEntity): Promise<any> {
 
 
+    let result = null;
     let dircetory = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}`;
   
     // 获取dircetory下后缀为mobileprovision的文件
@@ -117,6 +120,7 @@ export class UDIDMonitorService {
         //   console.log('UUID:', obj.UUID);
 
         // });
+
         provisioning( filePath, ( parseError, provisionData ) => {
            console.log( provisionData );
 
@@ -124,19 +128,17 @@ export class UDIDMonitorService {
           if(udids.includes(record.udid)){
   
             //卡设备
-            return 'process';
+            result =  'process';
             // if(warning){
             //   this.udid_warning(record.udid,provisionData.AppIDName);
 
             //  }
           }else{
 
-            return 'complete';
+            result =  'complete';
           }
-          // => { "AppIDName": "com.facebook.facebook",
-          //      "TeamName": "Facebook Inc.",
-          //      ... }
-      } );
+
+       } );
 
       // let mobileprovision = provisioning.parse(mobileprovisionFile);
 
@@ -150,26 +152,21 @@ export class UDIDMonitorService {
       //证书配置异常
       this.logService.error(record.udid);
 
-      return 'error';
+      result =  'error';
   
     }
 
+    // INSERT_YOUR_CODE
+    // 等待 result 不为空时返回 result
+    while (result === undefined || result === null || result === '') {
+      // 这里可以适当延迟，避免死循环占用CPU
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    return result;
 
 
 
- 
-    // //延迟5s后重试
-    // // await new Promise(resolve => setTimeout(resolve, 5000));
-    // const record = await this.superUDIDRepository.findOne({
-    //   where: { id: id },
-    // });
 
-
-    //   //警告
-    //   // return { code: -1, message: '未找到对应数据' };
-    // }
-
-  
   }
 
   async udid_warning(udid,cert_iss): Promise<any> {
