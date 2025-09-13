@@ -128,14 +128,16 @@ export class UDIDMonitorService {
           if(udids.includes(record.udid)){
   
             //卡设备
-            result =  'process';
+            result =  'complete';
             // if(warning){
             //   this.udid_warning(record.udid,provisionData.AppIDName);
 
             //  }
           }else{
 
-            result =  'complete';
+
+
+            result =  'process';
           }
 
        } );
