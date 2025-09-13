@@ -53,7 +53,7 @@ export class UDIDMonitorService {
 
        let result = await this.udid_check(record);
        //如果卡设备
-       if(result){
+       if(result == 'process'){
         this.udid_warning(record.udid,record.cert_iss);
        }
     }
@@ -78,14 +78,13 @@ export class UDIDMonitorService {
     if(!record){
       return "没有找到这台设备"
     }
-    console.log(record.udid);
 
     let result = await this.udid_check(record);
-    console.log(result);
 
-    if(result){
+
+    if(result == 'process'){
        return "卡设备了"
-    }else{
+    }else if(result == 'complete'){
       return "没有卡设备"
     }
   
@@ -121,15 +120,14 @@ export class UDIDMonitorService {
           if(udids.includes(record.udid)){
   
             //卡设备
-            return false;
+            return 'process';
             // if(warning){
             //   this.udid_warning(record.udid,provisionData.AppIDName);
 
             //  }
           }else{
 
-            console.log("卡设备了");
-            return true; 
+            return 'complete';
           }
           // => { "AppIDName": "com.facebook.facebook",
           //      "TeamName": "Facebook Inc.",
