@@ -35,6 +35,7 @@ export class UrlRedirectService {
     let domain = record.value;
     if(domain.startsWith('*.')){
         
+        let url = 'https://'+domain.replace('*.', '');
         // INSERT_YOUR_CODE
         return {
             statusCode: 301,

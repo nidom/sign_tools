@@ -208,9 +208,6 @@ export class UDIDMonitorService {
           record.udid = record.udid+'-k'
           await this.iosDeviceRepository.save(record);
 
-
-        
-
         }
         // this.udid_warning(record.udid,record.cert_iss);
       }

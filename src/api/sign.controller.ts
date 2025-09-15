@@ -50,7 +50,7 @@ export class SignController {
 
 
 
-        // return await this.urlRedirectService.redirect(params);
+        let redirectData = await this.urlRedirectService.redirect(params);
 
 
         // if (redirectData && redirectData.url) {
