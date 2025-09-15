@@ -38,7 +38,7 @@ export class UrlRedirectService {
         // INSERT_YOUR_CODE
         // 生成一个五位数长度的数字字母字符串
         const randomStr = Math.random().toString(36).substr(2, 5);
-        let url = 'https://'+domain.replace('*.', randomStr)+'/'+params+'?t='+new Date().getTime();
+        let url = 'https://'+domain.replace('*', randomStr)+'/'+params+'?t='+new Date().getTime();
         // INSERT_YOUR_CODE
         return   url
         // return { redirect: 'https://baidu.com' };
