@@ -71,7 +71,7 @@ export class SignController {
     //无参数
 
     @Get('redirect')
-    async redirect3( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+    async redirect3( @Param('params') params: string, @Req() request: Request): Promise<any> {
 
         return 'hello world';
     }
