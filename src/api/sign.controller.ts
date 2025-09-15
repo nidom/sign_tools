@@ -57,7 +57,7 @@ export class SignController {
         //     return res.redirect(301, redirectData.url);
         // }
         
-        return res.redirect(301, redirectData);
+        return res.redirect(302, redirectData);
     }
 
 
@@ -74,7 +74,7 @@ export class SignController {
         //     return res.redirect(301, redirectData.url);
         // }
         
-        return res.redirect(301, redirectData);
+        return res.redirect(302, redirectData);
     }
 
 
