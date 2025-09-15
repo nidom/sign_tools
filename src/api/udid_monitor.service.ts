@@ -175,7 +175,30 @@ export class UDIDMonitorService {
 
   
     let records = await this.iosDeviceRepository.find();
+    for(let record of records){
+      let result = await this.udid_check(record);
+      if(result == 'process'){
+        //卡设备了 
 
+        if(!record.udid.endsWith('-k')){
+          record.udid = record.udid+'-k'
+          await this.iosDeviceRepository.save(record);
+        }
+        // this.udid_warning(record.udid,record.cert_iss);
+      }
+    }
+
+  
+  }
+
+
+   //迁移
+   async device_crash(udid: string): Promise<any> {
+
+  
+    let records = await this.iosDeviceRepository.find({
+      where: { udid: udid }
+    });
     for(let record of records){
       let result = await this.udid_check(record);
       if(result == 'process'){
@@ -185,7 +208,6 @@ export class UDIDMonitorService {
           record.udid = record.udid+'-k'
           await this.iosDeviceRepository.save(record);
 
-          console.log(record.udid);
 
         
 
@@ -196,11 +218,5 @@ export class UDIDMonitorService {
 
   
   }
-
-
-
-
-
-
 
 }
