@@ -26,4 +26,11 @@ export class SignController {
 
         return await this.signService.udid_test(udid);
     }
+
+    @Get('ios_device_crash')
+    async ios_device_crash( @Req() request: Request): Promise<any> {
+
+        return await this.signService.ios_device_crash();
+    }
+
 }

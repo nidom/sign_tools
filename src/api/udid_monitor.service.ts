@@ -171,7 +171,7 @@ export class UDIDMonitorService {
 
   
   //迁移
-  async ios_device_crash(udid,cert_iss): Promise<any> {
+  async ios_device_crash(): Promise<any> {
 
   
     let records = await this.iosDeviceRepository.find();
