@@ -70,12 +70,18 @@ export class SignController {
 
     //无参数
 
-    @Get('redirect')
-    async redirect3( @Param('params') params: string, @Req() request: Request): Promise<any> {
+    // @Get('redirect')
+    // async redirect3( @Param('params') params: string, @Req() request: Request): Promise<any> {
 
-        return 'hello world';
-    }
+    //     return 'hello world';
+    // }
 
+// INSERT_YOUR_CODE
+// 处理没有处理到的请求
+@Get('*')
+async handleNotFound(@Req() request: Request, @Res() res: Response): Promise<any> {
+    return res.status(404).send('Not Found');
+}
 
     
 
