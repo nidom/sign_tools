@@ -60,12 +60,9 @@ export class SignController {
         return res.redirect(302, redirectData);
     }
 
-
+ //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
     @Get('redirect/:params/:s')
     async redirect2( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
-
-
-
 
         let redirectData = await this.urlRedirectService.redirect(params);
         return res.redirect(302, redirectData);
