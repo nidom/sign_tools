@@ -47,5 +47,4 @@ export class CommonController {
         return await this.commonService.deleteAllTables(requestDto.params, request);
     }
     
-
 }

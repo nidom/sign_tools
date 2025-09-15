@@ -6,7 +6,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { APP_CONFIG } from './utils';
 import { AwsBillModule } from './aws_api/aws_bill.module';
-import { SignModule } from './sign_api/sign.module';
+import { SignModule } from './api/sign.module';
 let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
@@ -55,7 +55,7 @@ let mySqlModule = TypeOrmModule.forRootAsync({
 
   ],
   providers: [
-    
+
     {
       provide: APP_INTERCEPTOR,
       useClass: ApiInterceptor,

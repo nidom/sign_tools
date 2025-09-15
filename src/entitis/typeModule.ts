@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { SuperSignEntity } from './super_sign.entity';
+import { SuperDeviceEntity } from './super_device.entity';
+import { IOSDeviceEntity } from './ios_device.entity';
 
 export let TypeModule =  TypeOrmModule.forFeature([
   
-  SuperSignEntity,
+  SuperDeviceEntity,
+  IOSDeviceEntity,
   
 
 ])
