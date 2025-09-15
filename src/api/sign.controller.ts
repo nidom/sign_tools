@@ -8,11 +8,13 @@ import { Body, Req } from '@nestjs/common';
 import { RequestDto } from 'src/utils';
 import { Post, Get, Param } from '@nestjs/common';
 import { Request } from '@nestjs/common';
+import { UrlRedirectService } from './url_redirect.service';
 @Controller('api/sign')
 export class SignController {
 
     constructor(
         private readonly signService: UDIDMonitorService,
+        private readonly urlRedirectService: UrlRedirectService,
     ) { }
 
     @Get('udid_monitor')
@@ -38,6 +40,15 @@ export class SignController {
 
         return await this.signService.device_crash(udid);
     }
+
+    @Get('redirect/:params')
+    async redirect( @Param('params') params: string, @Req() request: Request): Promise<any> {
+
+        return await this.urlRedirectService.redirect(params);
+    }
+
+
+    
 
 
 }
