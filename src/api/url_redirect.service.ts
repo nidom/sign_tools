@@ -28,7 +28,7 @@ export class UrlRedirectService {
 
   
 
-    console.log(params);
+    // console.log(params);
 
     let record = await this.signConfigRepository.findOne({where: { name: 'IN_SJDOMAIN' }});
     
