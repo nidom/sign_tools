@@ -8,6 +8,9 @@ import { Body, Req } from '@nestjs/common';
 import { RequestDto } from 'src/utils';
 import { Post, Get, Param } from '@nestjs/common';
 import { Request } from '@nestjs/common';
+import { Res } from '@nestjs/common';
+import { Response } from 'express';
+
 import { UrlRedirectService } from './url_redirect.service';
 @Controller('api/sign')
 export class SignController {
@@ -42,9 +45,19 @@ export class SignController {
     }
 
     @Get('redirect/:params')
-    async redirect( @Param('params') params: string, @Req() request: Request): Promise<any> {
+    async redirect( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
 
-        return await this.urlRedirectService.redirect(params);
+
+
+
+        // return await this.urlRedirectService.redirect(params);
+
+
+        // if (redirectData && redirectData.url) {
+        //     return res.redirect(301, redirectData.url);
+        // }
+        
+        return res.redirect(301, 'https://baidu.com');
     }
 
 
