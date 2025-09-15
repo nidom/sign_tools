@@ -57,7 +57,24 @@ export class SignController {
         //     return res.redirect(301, redirectData.url);
         // }
         
-        return res.redirect(301, 'https://baidu.com');
+        return res.redirect(301, redirectData);
+    }
+
+
+    @Get('redirect/:params/:s')
+    async redirect2( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+
+
+
+
+        let redirectData = await this.urlRedirectService.redirect(params);
+
+
+        // if (redirectData && redirectData.url) {
+        //     return res.redirect(301, redirectData.url);
+        // }
+        
+        return res.redirect(301, redirectData);
     }
 
 
