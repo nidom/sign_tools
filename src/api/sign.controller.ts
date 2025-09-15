@@ -68,13 +68,15 @@ export class SignController {
 
 
         let redirectData = await this.urlRedirectService.redirect(params);
-
-
-        // if (redirectData && redirectData.url) {
-        //     return res.redirect(301, redirectData.url);
-        // }
-        
         return res.redirect(302, redirectData);
+    }
+
+    //无参数
+
+    @Get('redirect')
+    async redirect3( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+
+        return 'hello world';
     }
 
 
