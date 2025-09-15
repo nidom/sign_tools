@@ -35,7 +35,12 @@ export class UrlRedirectService {
     let domain = record.value;
     if(domain.startsWith('*.')){
         
-        return { redirect: 'https://baidu.com' };
+        // INSERT_YOUR_CODE
+        return {
+            statusCode: 301,
+            url: 'https://baidu.com'
+        };
+        // return { redirect: 'https://baidu.com' };
     }
 
     // for(let record of records){
