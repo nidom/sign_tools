@@ -80,7 +80,7 @@ export class SignController {
 // 处理没有处理到的请求
 @Get('*')
 async handleNotFound(@Req() request: Request, @Res() res: Response): Promise<any> {
-    return res.status(404).send('Not Found');
+    return res.status(404).send('Not Found,Check your url');
 }
 
     
