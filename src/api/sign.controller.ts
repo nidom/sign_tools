@@ -52,7 +52,6 @@ export class SignController {
 
 
 
-        let url = "/api/sign/redirect/kdtyhq?ssid=984"
 
         let ssid = null
 
@@ -60,10 +59,13 @@ export class SignController {
 
             let  queryParams = new URLSearchParams(request.url.split('?')[1]);
             ssid = queryParams.get('ssid');
+            
+            console.log('ssid:', ssid);
+
+            
+        console.log('ssid:', queryParams);
         }
 
-        // 获取 URL 查询参数中的 ssid 值
-     
 
 
         
