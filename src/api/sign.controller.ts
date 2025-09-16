@@ -52,8 +52,18 @@ export class SignController {
 
 
 
-        console.log('redirect/:params');
-        console.log(request.url);
+        let url = "/api/sign/redirect/kdtyhq?ssid=984"
+
+        let ssid = null
+
+        if(request.url.includes('?ssid=')){
+
+            let  queryParams = new URLSearchParams(request.url.split('?')[1]);
+            ssid = queryParams.get('ssid');
+        }
+
+        // 获取 URL 查询参数中的 ssid 值
+     
 
 
         
@@ -64,7 +74,7 @@ export class SignController {
         // INSERT_YOUR_CODE
         // 获取url中的参数
 
-        let redirectData = await this.urlRedirectService.redirect(params);
+        let redirectData = await this.urlRedirectService.redirect(params,ssid);
 
 
         // if (redirectData && redirectData.url) {
@@ -77,10 +87,10 @@ export class SignController {
  //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
     @Get('redirect/:params/:s')
     async redirect2( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
-        console.log('222222');
-        console.log(request.url);
+        // console.log('222222');
+        // console.log(request.url);
 
-        let redirectData = await this.urlRedirectService.redirect(params);
+        let redirectData = await this.urlRedirectService.redirect(params,null);
         return res.redirect(302, redirectData);
     }
 

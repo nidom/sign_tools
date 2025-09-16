@@ -24,21 +24,24 @@ export class UrlRedirectService {
 
 
       //迁移
-  async redirect(params: string): Promise<any> {
+  async redirect(params: string,ssid: string): Promise<any> {
 
   
 
     // console.log(params);
 
     let record = await this.signConfigRepository.findOne({where: { name: 'IN_SJDOMAIN' }});
-    
-    let domain = record.value;
+     let domain = record.value;
     if(domain.startsWith('*.')){
         
         // INSERT_YOUR_CODE
         // 生成一个五位数长度的数字字母字符串
         const randomStr = Math.random().toString(36).substr(2, 10);
         let url = 'https://'+domain.replace('*', randomStr)+'/'+params+'?t='+new Date().getTime();
+
+        if(ssid){
+            url += '&ssid='+ssid;
+        }
         // INSERT_YOUR_CODE
         return   url
         // return { redirect: 'https://baidu.com' };
