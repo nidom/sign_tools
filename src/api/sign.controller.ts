@@ -48,7 +48,21 @@ export class SignController {
     async redirect( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
 
 
+        // const url = request.url;
 
+
+
+        console.log('redirect/:params');
+        console.log(request.url);
+
+
+        
+        // // 获取 URL 查询参数
+        // const queryParams = request;
+        // console.log('Query parameters:', queryParams);
+
+        // INSERT_YOUR_CODE
+        // 获取url中的参数
 
         let redirectData = await this.urlRedirectService.redirect(params);
 
