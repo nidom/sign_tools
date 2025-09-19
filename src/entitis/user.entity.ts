@@ -15,10 +15,10 @@ export class  UserEntity extends SharedEntity {
   @Column({ length: 100, comment: '用户邮箱' })
   in_mail: string;
 
-  @Column({ length: 11, comment: '超级签名剩余量' })
+  @Column({  comment: '超级签名剩余量' })
   device_num: number;
 
-  @Column({ length: 11, comment: '超级签名已使用' })
+  @Column({  comment: '超级签名已使用' })
   device_used: number;
 
 
