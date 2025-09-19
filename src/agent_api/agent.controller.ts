@@ -17,7 +17,7 @@ export class AgentController {
         private readonly agentService: AgentService,
     ) { }
 
-    @Get('user_list:/agent_role')
+    @Get('user_list/:agent_role')
     async user_list(@Param('agent_role') agent_role: string, @Req() request: Request): Promise<any> {
 
         return await this.agentService.user_list(agent_role);
