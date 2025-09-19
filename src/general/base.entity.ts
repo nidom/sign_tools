@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 export class SharedEntity extends BaseEntity {
+  
 
 
   // // @Transform((row: TransformFnParams) => +new Date(row.value))

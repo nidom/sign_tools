@@ -1,3 +1,4 @@
+import { AgentModule } from './agent_api/agent.module';
 import { CommonModule } from './common_api/common.module';
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,6 +11,7 @@ let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
   imports: [
+    AgentModule,
 
     SignModule,],
   inject: [],
