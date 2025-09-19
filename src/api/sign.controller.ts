@@ -21,78 +21,52 @@ export class SignController {
     ) { }
 
     @Get('udid_monitor')
-    async udid_monitor( @Req() request: Request): Promise<any> {
+    async udid_monitor(@Req() request: Request): Promise<any> {
 
         return await this.signService.udid_monitor();
     }
 
     @Get('udid_test/:udid')
-    async udid_test( @Param('udid') udid: string, @Req() request: Request): Promise<any> {
+    async udid_test(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
 
         return await this.signService.udid_test(udid);
     }
 
     @Get('ios_device_crash')
-    async ios_device_crash( @Req() request: Request): Promise<any> {
+    async ios_device_crash(@Req() request: Request): Promise<any> {
 
         return await this.signService.ios_device_crash();
     }
 
     @Get('device_crash/:udid')
-    async device_crash( @Param('udid') udid: string, @Req() request: Request): Promise<any> {
+    async device_crash(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
 
         return await this.signService.device_crash(udid);
     }
 
     @Get('redirect/:params')
-    async redirect( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+    async redirect(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
 
 
         // const url = request.url;
-
-
-
-
         let ssid = null
+        if (request.url.includes('?ssid=')) {
 
-        if(request.url.includes('?ssid=')){
-
-            let  queryParams = new URLSearchParams(request.url.split('?')[1]);
+            let queryParams = new URLSearchParams(request.url.split('?')[1]);
             ssid = queryParams.get('ssid');
-            
-            console.log('ssid:', ssid);
-
-            
-        console.log('ssid:', queryParams);
         }
 
-
-
-        
-        // // 获取 URL 查询参数
-        // const queryParams = request;
-        // console.log('Query parameters:', queryParams);
-
-        // INSERT_YOUR_CODE
-        // 获取url中的参数
-
-        let redirectData = await this.urlRedirectService.redirect(params,ssid);
-
-
-        // if (redirectData && redirectData.url) {
-        //     return res.redirect(301, redirectData.url);
-        // }
-        
+        let redirectData = await this.urlRedirectService.redirect(params, ssid);
         return res.redirect(302, redirectData);
     }
 
- //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
+    //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
     @Get('redirect/:params/:s')
-    async redirect2( @Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+    async redirect2(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
         // console.log('222222');
         // console.log(request.url);
 
-        let redirectData = await this.urlRedirectService.redirect(params,null);
+        let redirectData = await this.urlRedirectService.redirect(params, null);
         return res.redirect(302, redirectData);
     }
 
@@ -104,19 +78,17 @@ export class SignController {
     //     return 'hello world';
     // }
 
-// INSERT_YOUR_CODE
-// 处理没有处理到的请求
-@Get('*')
-async handleNotFound(@Req() request: Request, @Res() res: Response): Promise<any> {
-
-
     // INSERT_YOUR_CODE
-    const url = request.url;
-    console.log(url);
-    return res.status(404).send('Not Found,Check your url');
-}
+    // 处理没有处理到的请求
+    @Get('*')
+    async handleNotFound(@Req() request: Request, @Res() res: Response): Promise<any> {
 
-    
+
+        // INSERT_YOUR_CODE
+        const url = request.url;
+        console.log(url);
+        return res.status(404).send('Not Found,Check your url');
+    }
 
 
 }

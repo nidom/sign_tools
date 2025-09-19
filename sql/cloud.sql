@@ -16,7 +16,6 @@ CREATE TABLE `agent_role` (
    `ali_discount` int(4) DEFAULT 100 COMMENT '阿里云的点位',
    `tx_discount` int(4) DEFAULT 100 COMMENT '腾讯云点位',
    `aws_discount` int(4) DEFAULT 100 COMMENT '腾讯云点位',
-   
    -- `tg_id` varchar(30) DEFAULT ''  COMMENT '飞机 id',
    -- `phone` varchar(20)  DEFAULT '' COMMENT '手机号',
    `agent_balance` double  DEFAULT 0 COMMENT '账户余额',

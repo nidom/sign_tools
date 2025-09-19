@@ -1,8 +1,15 @@
 import { SharedEntity} from "src/general/base.entity";
-import { Entity, Column, Index } from 'typeorm';
+import { Entity, Column, Index, PrimaryGeneratedColumn } from 'typeorm';
+
 @Entity('ff_super_device')
 export class  SuperDeviceEntity extends SharedEntity {
 
+  @PrimaryGeneratedColumn({
+    type: 'int',
+    name: 'id',
+    comment: '主键id',
+  })
+  id!: number;
   @Column({ length: 50, comment: 'udid' })
   udid: string;
 

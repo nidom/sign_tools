@@ -5,12 +5,12 @@ import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { APP_CONFIG } from './utils';
-import { AwsBillModule } from './aws_api/aws_bill.module';
 import { SignModule } from './api/sign.module';
 let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
   imports: [
+
     SignModule,],
   inject: [],
   useFactory: () => ({
@@ -46,11 +46,10 @@ let mySqlModule = TypeOrmModule.forRootAsync({
 
     CommonModule,
     mySqlModule,
-    AwsBillModule,
-
   ],
 
   controllers: [
+
 
 
   ],

@@ -170,12 +170,3 @@ CREATE TABLE `aws_service_operation_note` (
 
 
 
-
-
-LegalEntity
-
-
-
-
-
-

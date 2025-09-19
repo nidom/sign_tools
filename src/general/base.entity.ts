@@ -8,13 +8,7 @@ import {
 } from 'typeorm';
 
 export class SharedEntity extends BaseEntity {
-  
-  @PrimaryGeneratedColumn({
-    type: 'int',
-    name: 'id',
-    comment: '主键id',
-  })
-  id!: number;
+
 
   // // @Transform((row: TransformFnParams) => +new Date(row.value))
   // @CreateDateColumn({

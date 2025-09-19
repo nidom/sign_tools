@@ -81,7 +81,7 @@ CREATE TABLE `ali_invite` (
 -- ----------------------------
 -- 阿里用户
 -- ----------------------------
-DROP TABLE IF EXISTS `ali_user`;
+DROP TABLE IF EXISTS `agent`;
 CREATE TABLE `ali_user` (   
 
    `id` int NOT NULL AUTO_INCREMENT primary key COMMENT '主键id',
