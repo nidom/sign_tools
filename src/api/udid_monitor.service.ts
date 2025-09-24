@@ -140,7 +140,7 @@ export class UDIDMonitorService {
       
       }else{
 
-      //证书配置异常
+       //证书配置异常
        this.logService.error(record.udid);
        result =  'error';
   
@@ -170,7 +170,7 @@ export class UDIDMonitorService {
 
 
   
-  //迁移
+  //处理卡设备
   async ios_device_crash(): Promise<any> {
 
   
@@ -192,7 +192,7 @@ export class UDIDMonitorService {
   }
 
 
-   //迁移
+   //自动处理卡设备
    async device_crash(udid: string): Promise<any> {
 
   

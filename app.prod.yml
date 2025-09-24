@@ -3,7 +3,7 @@ PORT: 3000
 # 数据库配置
 datasource:
   driverName: mysql
-  host: 38.175.194.18
+  host: 154.37.221.118
   port: 3306
   database: app
   username: app
