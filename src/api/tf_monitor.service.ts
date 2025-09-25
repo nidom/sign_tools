@@ -30,7 +30,9 @@ export class TFMonitorService {
     async monitorUrlAccessibility(url: string): Promise<void> {
         try {
             const response = await fetch(url);
-            
+            console.log(response);
+            console.log("=================");
+            console.log(response.status);
             if (response.status === 404) {
 
                 if(!this.urlsCache.includes(url)){
