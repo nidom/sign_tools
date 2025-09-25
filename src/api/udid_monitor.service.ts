@@ -46,7 +46,6 @@ export class UDIDMonitorService {
         order: { id: 'DESC' },
         take: 3
     });
-    console.log(latestRecords);
     for(let record of latestRecords){
 
        let result = await this.udid_check(record);
@@ -77,8 +76,8 @@ export class UDIDMonitorService {
 
 
 
-    console.log('--------------------------------');
-    console.log(result);
+    // console.log('--------------------------------');
+    // console.log(result);
     if(result == 'process'){
 
        return "卡设备了"
@@ -106,15 +105,7 @@ export class UDIDMonitorService {
 
         let filePath = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}/${mobileprovisionFile}`;
 
-        // provisioning(filePath, (err, obj) => {
-        //   if (err) {
-        //     console.error('Error reading the mobileprovision file:', err);
-        //     return;
-        //   }
-          
-        //   console.log('UUID:', obj.UUID);
 
-        // });
 
         provisioning( filePath, ( parseError, provisionData ) => {
           //  console.log( provisionData );
@@ -166,11 +157,7 @@ export class UDIDMonitorService {
     }
 
   }
-
-
-
-  
-  //处理卡设备
+//处理卡设备
   async ios_device_crash(): Promise<any> {
 
   

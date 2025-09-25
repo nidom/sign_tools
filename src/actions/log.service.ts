@@ -43,6 +43,17 @@ export class LogService {
         
      }
 
+     
+    async tf_warning(url: string) {
+
+
+
+        this.logBot.sendMessage('TF 链接访问异常:'+url);
+
+
+        
+     }
+
         
 
     async error(udid: string) {

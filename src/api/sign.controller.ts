@@ -10,7 +10,7 @@ import { Post, Get, Param } from '@nestjs/common';
 import { Request } from '@nestjs/common';
 import { Res } from '@nestjs/common';
 import { Response } from 'express';
-
+import { TFMonitorService } from './tf_monitor.service';
 import { UrlRedirectService } from './url_redirect.service';
 @Controller('api/sign')
 export class SignController {
@@ -18,6 +18,7 @@ export class SignController {
     constructor(
         private readonly signService: UDIDMonitorService,
         private readonly urlRedirectService: UrlRedirectService,
+        private readonly tfMonitorService: TFMonitorService,
     ) { }
 
     @Get('udid_monitor')
@@ -42,6 +43,12 @@ export class SignController {
     async device_crash(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
 
         return await this.signService.device_crash(udid);
+    }
+
+    @Get('tf_monitor')
+    async tf_monitor(@Req() request: Request): Promise<any> {
+
+        return await this.tfMonitorService.monitor();
     }
 
     @Get('redirect/:params')
