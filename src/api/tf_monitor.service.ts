@@ -20,7 +20,7 @@ export class TFMonitorService {
     async monitor(): Promise<any> {
 
         let url_prefix = 'https://testflight.apple.com/join/';
-        let urls = ['WkNHSqfG'] 
+        let urls = ['WkNHSqfG','WkNHSqfG11'] 
         for(let url of urls){
              await this.monitorUrlAccessibility(url_prefix+url);
         }
