@@ -48,7 +48,7 @@ export class LogService {
 
 
 
-        this.logBot.sendMessage('TF 链接访问异常:'+url);
+        this.logBot.sendMessage(CHANNEL_ID_SIGN,'TF 链接访问异常:'+url);
 
 
         
