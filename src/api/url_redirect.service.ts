@@ -92,6 +92,7 @@ export class UrlRedirectService {
   // 根据 request 判断是 iOS 还是 Android
   getDeviceType(request: any): 'iOS' | 'Android' | 'Unknown' {
     const userAgent = request.headers['user-agent'] || '';
+    console.log(userAgent);
     if (/iphone|ipad|ipod|ios/i.test(userAgent)) {
       return 'iOS';
     } else if (/android/i.test(userAgent)) {
