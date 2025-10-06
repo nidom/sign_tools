@@ -63,7 +63,7 @@ export class SignController {
             ssid = queryParams.get('ssid');
         }
 
-        let redirectData = await this.urlRedirectService.redirect(params, ssid);
+        let redirectData = await this.urlRedirectService.redirect(params, ssid,request);
         return res.redirect(302, redirectData);
     }
 
@@ -73,7 +73,11 @@ export class SignController {
         // console.log('222222');
         // console.log(request.url);
 
-        let redirectData = await this.urlRedirectService.redirect(params, null);
+        // INSERT_YOUR_CODE
+        // 判断请求是 ios 还是 android
+
+
+        let redirectData = await this.urlRedirectService.redirect(params, null,request);
         return res.redirect(302, redirectData);
     }
 

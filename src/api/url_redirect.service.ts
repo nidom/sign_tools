@@ -12,27 +12,60 @@ import { LogService } from 'src/actions/log.service';
 import { IOSDeviceEntity } from 'src/entitis/ios_device.entity';
 import { Inject } from '@nestjs/common';
 import { SignConfigEntity } from 'src/entitis/sign_config.entity';
+import * as request from 'supertest';
+import { Request } from '@nestjs/common';
+import { AppIDEntity } from 'src/entitis/app_id.entity';
 @Injectable()
 export class UrlRedirectService {
 
     constructor(
         @InjectRepository(SignConfigEntity)
         private readonly signConfigRepository: Repository<SignConfigEntity>,
+
+        @InjectRepository(AppIDEntity)
+        private readonly appIDRepository: Repository<AppIDEntity>,
     ) {
     }
 
 
 
       //迁移
-  async redirect(params: string,ssid: string): Promise<any> {
+  async redirect(params: string,ssid: string,request): Promise<any> {
 
-  
 
     // console.log(params);
 
+
+
+
     let record = await this.signConfigRepository.findOne({where: { name: 'IN_SJDOMAIN' }});
-     let domain = record.value;
-    if(domain.startsWith('*.')){
+    let domain = record.value;
+
+    if(!domain.startsWith('*.')){
+      
+      return 
+    }
+  
+    let appIDRecord = await this.appIDRepository.findOne({where: { in_link: params }});
+
+
+      let in_kid = appIDRecord.in_kid;
+
+      //如果有关联 app 再判断请求类型
+      if(in_kid >0 ){
+         
+        let deviceType = this.getDeviceType(request);
+        if(deviceType != appIDRecord.in_form){
+          let in_kid_app = await this.appIDRepository.findOne({where: { in_id: in_kid }});
+          params = in_kid_app.in_link;
+
+        }
+
+      }
+
+
+
+
         
         // INSERT_YOUR_CODE
         // 生成一个五位数长度的数字字母字符串
@@ -48,7 +81,7 @@ export class UrlRedirectService {
         // INSERT_YOUR_CODE
         return   url
         // return { redirect: 'https://baidu.com' };
-    }
+    
 
     // for(let record of records){
     //   let result = await this.udid_check(record);
@@ -65,5 +98,19 @@ export class UrlRedirectService {
 
   
   }
+
+
+// INSERT_YOUR_CODE
+// 根据 request 判断是 iOS 还是 Android
+   getDeviceType(request: any): 'iOS' | 'Android' | 'Unknown' {
+    const userAgent = request.headers['user-agent'] || '';
+    if (/iphone|ipad|ipod|ios/i.test(userAgent)) {
+        return 'iOS';
+    } else if (/android/i.test(userAgent)) {
+        return 'Android';
+    } else {
+        return 'Android';
+    }
+}
 
 }
