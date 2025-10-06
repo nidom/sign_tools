@@ -15,6 +15,7 @@ import { SignConfigEntity } from 'src/entitis/sign_config.entity';
 import * as request from 'supertest';
 import { Request } from '@nestjs/common';
 import { AppIDEntity } from 'src/entitis/app_id.entity';
+import e from 'express';
 @Injectable()
 export class UrlRedirectService {
 
@@ -58,7 +59,9 @@ export class UrlRedirectService {
       //如果请求类型不一致 则跳转到关联app
       if (deviceType != appIDRecord.in_form) {
         let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
+        if(in_kid_app){ 
         params = in_kid_app.in_link;
+      }
 
       }
       //如果请求类型为 Unknown 并且  appIDRecord.in_form 为 Android 则跳转到iOS
@@ -66,7 +69,10 @@ export class UrlRedirectService {
       if(deviceType == 'Unknown' && appIDRecord.in_form == 'Android'){
 
         let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
-        params = in_kid_app.in_link; 
+        if(in_kid_app){
+
+          params = in_kid_app.in_link; 
+        }
       
       }
 
@@ -98,14 +104,11 @@ export class UrlRedirectService {
     // INSERT_YOUR_CODE
     // 根据userAgent判断设备类型
     if (/iphone|ipad|ipod|ios/i.test(userAgent)) {
-      console.log('iOS');
       return 'iOS';
     } else if (/android/i.test(userAgent)) {
 
-      console.log('Android');
       return 'Android';
     } else {
-      console.log('Unknown');
       return 'Unknown';
     }
 
