@@ -49,34 +49,26 @@ export class UrlRedirectService {
 
     let appIDRecord = await this.appIDRepository.findOne({ where: { in_link: params } });
 
-
     let in_kid = appIDRecord.in_kid;
 
-    // //如果有关联 app 再判断请求类型
-    // if (in_kid > 0) {
+    //如果有关联 app 再判断请求类型
+    if (in_kid > 0) {
 
-    //   let deviceType = this.getDeviceType(request);
-    //   //如果请求类型不一致 则跳转到关联app
-    //   if (deviceType != appIDRecord.in_form) {
-    //     let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
-    //     if(in_kid_app){ 
-    //        params = in_kid_app.in_link;
-    //     }
+      let deviceType = this.getDeviceType(request);
+      //如果请求类型不一致 则跳转到关联app
 
-    //   }
-    //   //如果请求类型为 Unknown 并且  appIDRecord.in_form 为 Android 则跳转到iOS
+      console.log(deviceType);
+      console.log(appIDRecord.in_form);
+      if (deviceType != appIDRecord.in_form) {
+        let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
+        if(in_kid_app){ 
+           params = in_kid_app.in_link;
+        }
 
-    //   // if(deviceType == 'Unknown' && appIDRecord.in_form == 'Android'){
+      }
 
-    //   //   let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
-    //   //   if(in_kid_app){
 
-    //   //     params = in_kid_app.in_link; 
-    //   //   }
-      
-    //   // }
-
-    // }
+    }
 
     // INSERT_YOUR_CODE
     // 生成一个五位数长度的数字字母字符串
