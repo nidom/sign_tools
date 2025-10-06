@@ -93,13 +93,32 @@ export class UrlRedirectService {
   getDeviceType(request: any): 'iOS' | 'Android' | 'Unknown' {
     const userAgent = request.headers['user-agent'] || '';
     console.log(userAgent);
+    // INSERT_YOUR_CODE
+    // 根据userAgent判断设备类型
     if (/iphone|ipad|ipod|ios/i.test(userAgent)) {
+      console.log('iOS');
       return 'iOS';
     } else if (/android/i.test(userAgent)) {
+
+      console.log('Android');
       return 'Android';
     } else {
+      console.log('Unknown');
       return 'Unknown';
     }
+
+
+    
+
+
+
+    // if (/iphone|ipad|ipod|ios/i.test(userAgent)) {
+    //   return 'iOS';
+    // } else if (/android/i.test(userAgent)) {
+    //   return 'Android';
+    // } else {
+    //   return 'Unknown';
+    // }
   }
 
 }
