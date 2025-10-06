@@ -60,21 +60,21 @@ export class UrlRedirectService {
       if (deviceType != appIDRecord.in_form) {
         let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
         if(in_kid_app){ 
-        params = in_kid_app.in_link;
-      }
+           params = in_kid_app.in_link;
+        }
 
       }
       //如果请求类型为 Unknown 并且  appIDRecord.in_form 为 Android 则跳转到iOS
 
-      if(deviceType == 'Unknown' && appIDRecord.in_form == 'Android'){
+      // if(deviceType == 'Unknown' && appIDRecord.in_form == 'Android'){
 
-        let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
-        if(in_kid_app){
+      //   let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
+      //   if(in_kid_app){
 
-          params = in_kid_app.in_link; 
-        }
+      //     params = in_kid_app.in_link; 
+      //   }
       
-      }
+      // }
 
     }
 
@@ -109,7 +109,7 @@ export class UrlRedirectService {
 
       return 'Android';
     } else {
-      return 'Unknown';
+      return 'iOS';
     }
 
 
