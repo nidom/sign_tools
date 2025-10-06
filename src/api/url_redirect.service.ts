@@ -49,10 +49,11 @@ export class UrlRedirectService {
 
     let appIDRecord = await this.appIDRepository.findOne({ where: { in_link: params } });
 
-    let in_kid = appIDRecord.in_kid;
+
+    // let in_kid = appIDRecord.in_kid;
 
     //如果有关联 app 再判断请求类型
-    if (in_kid > 0) {
+    if (appIDRecord && appIDRecord.in_kid > 0) {
 
       let deviceType = this.getDeviceType(request);
       //如果请求类型不一致 则跳转到关联app
@@ -60,7 +61,7 @@ export class UrlRedirectService {
       console.log(deviceType);
       console.log(appIDRecord.in_form);
       if (deviceType != appIDRecord.in_form) {
-        let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
+        let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: appIDRecord.in_kid } });
         if(in_kid_app){ 
            params = in_kid_app.in_link;
         }
