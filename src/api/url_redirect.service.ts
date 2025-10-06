@@ -61,14 +61,13 @@ export class UrlRedirectService {
         params = in_kid_app.in_link;
 
       }
-      //如果请求类型为 Unknown 或者 appIDRecord.in_form 为 Android 则跳转到iOS
+      //如果请求类型为 Unknown 并且  appIDRecord.in_form 为 Android 则跳转到iOS
 
-      if(deviceType == 'Unknown' || appIDRecord.in_form == 'Android'){
+      if(deviceType == 'Unknown' && appIDRecord.in_form == 'Android'){
 
-        if (deviceType != appIDRecord.in_form) {
         let in_kid_app = await this.appIDRepository.findOne({ where: { in_id: in_kid } });
         params = in_kid_app.in_link; 
-      }
+      
       }
 
     }
