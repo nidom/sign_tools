@@ -37,7 +37,10 @@ export class UrlRedirectService {
         // INSERT_YOUR_CODE
         // 生成一个五位数长度的数字字母字符串
         const randomStr = Math.random().toString(36).substr(2, 10);
-        let url = 'https://'+domain.replace('*', randomStr)+'/'+params+'?t='+new Date().getTime();
+
+        // INSERT_YOUR_CODE
+        const timestamp = Math.floor(Date.now() / 1000);
+        let url = 'https://'+domain.replace('*', randomStr)+'/'+params+'?t='+timestamp;
 
         if(ssid){
             url += '&ssid='+ssid;

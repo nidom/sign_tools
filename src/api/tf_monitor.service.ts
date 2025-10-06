@@ -12,9 +12,7 @@ export class TFMonitorService {
       
         private readonly logService: LogService,
 
-      ) { 
-
-    }
+      ) { }
 
     // 监控URL可访问性的方法
     async monitor(): Promise<any> {
