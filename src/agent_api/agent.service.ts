@@ -40,7 +40,23 @@ export class AgentService {
 
         let user_list = await this.userRepository.find({where: {id: In(user_ids)}});
 
-        return  new CResult(0, '', user_list);
+        let results = [];
+        for (let item of user_list) {
+        
+            results.push({
+                ...item,
+                note: agent_user_list.find(agent_user => agent_user.user_id === item.id)?.note,
+   
+  
+            });
+        }
+
+        // for(let user_item of user_list){
+
+        //     user_item.note = agent_user_list.find(agent_user => agent_user.user_id === user_item.id)?.note;
+        // }
+
+        return  new CResult(0, '', results);
     }
 
 

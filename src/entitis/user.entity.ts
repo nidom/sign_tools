@@ -21,5 +21,7 @@ export class  UserEntity extends SharedEntity {
   @Column({  comment: '超级签名已使用' })
   device_used: number;
 
+  
+
 
 }
