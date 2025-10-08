@@ -50,8 +50,6 @@ export class UrlRedirectService {
     let appIDRecord = await this.appIDRepository.findOne({ where: { in_link: params } });
 
 
-    // let in_kid = appIDRecord.in_kid;
-
     //如果有关联 app 再判断请求类型
     if (appIDRecord && appIDRecord.in_kid > 0) {
 
@@ -84,11 +82,7 @@ export class UrlRedirectService {
     }
     // INSERT_YOUR_CODE
     return url
-
-
   }
-
-
   // INSERT_YOUR_CODE
   // 根据 request 判断是 iOS 还是 Android
   getDeviceType(request: any): 'iOS' | 'Android' | 'Unknown' {
