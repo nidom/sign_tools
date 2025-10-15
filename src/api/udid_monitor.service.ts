@@ -132,7 +132,7 @@ export class UDIDMonitorService {
       }else{
 
        //证书配置异常
-       this.logService.error(record.udid);
+      //  this.logService.error(record.udid);
        result =  'error';
   
     }
