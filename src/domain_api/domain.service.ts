@@ -3,7 +3,7 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
-import DNS2 from 'dns2';
+const dns2 = require('dns2');
 import { InjectRepository } from '@nestjs/typeorm';
 import { TwDomainEntity } from 'src/entitis/tw_domain.entity';
 import { Repository } from 'typeorm';
@@ -35,7 +35,7 @@ export class DomainService {
         //   });
 
 
-          const client = new DNS2({
+          const client = new dns2({
             // 可选配置
                 dns: '68.95.1.1',   // 上游 DNS 服务器
                 port: 53,
