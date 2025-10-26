@@ -8,6 +8,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TwDomainEntity } from 'src/entitis/tw_domain.entity';
 import { Repository } from 'typeorm';
 import { LogService } from 'src/actions/log.service';
+import * as dns from 'dns';
+import { promisify } from 'util';
+
+const lookup = promisify(dns.lookup);
 
 const myDict = {
 
@@ -34,18 +38,17 @@ export class DomainService {
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
 
-
-          const client = new dns2({
-            // 可选配置
-                dns: 'dns.hinet.net',   // 上游 DNS 服务器
-                // port: 53,
-            // recursive: true  // 默认开启递归查询
+        const resolver = new dns2({
+            nameServers: ['168.95.1.1'], // dns.hinet.net 的 IP 地址
+            timeout: 5000
           });
         // let ip = await dns.resolve(domain);
         let records = await this.twDomainRepository.find();
         for(let record of records){
-        
-            const result2 = await client.resolveA(record.domain);
+
+            // const result = await lookup(record.domain,{family: 4});
+            // console.log(result); 
+            const result2 = await resolver.resolveA(record.domain);
             console.log(result2.answers);
             // let ip = await dns.resolve(record.domain);
             // if(ip != record.ip){
