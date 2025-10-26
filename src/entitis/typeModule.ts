@@ -7,6 +7,7 @@ import { AgentRoleEntity } from './agent_role.entity';
 import { AgentUserEntity } from './agent_user.entity';
 import { UserEntity } from './user.entity';
 import { AppIDEntity } from './app_id.entity';
+import { TwDomainEntity } from './tw_domain.entity';
 export let TypeModule =  TypeOrmModule.forFeature([
   
   SuperDeviceEntity,
@@ -16,5 +17,6 @@ export let TypeModule =  TypeOrmModule.forFeature([
   AgentUserEntity,
   UserEntity,
   AppIDEntity,
+  TwDomainEntity,
 ])
 
