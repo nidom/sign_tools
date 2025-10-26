@@ -37,8 +37,8 @@ export class DomainService {
 
           const client = new dns2({
             // 可选配置
-                dns: '68.95.1.1',   // 上游 DNS 服务器
-                port: 53,
+                dns: 'dns.hinet.net',   // 上游 DNS 服务器
+                // port: 53,
             // recursive: true  // 默认开启递归查询
           });
         // let ip = await dns.resolve(domain);
