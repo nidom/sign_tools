@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>域名管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #f7f9fb;
+            font-family: 'Segoe UI', 'Arial', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 720px;
+            margin: 45px auto 0 auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px 0 rgba(42,45,58,.08);
+            padding: 40px 30px;
+        }
+        h2 {
+            margin-bottom: 28px;
+            color: #445;
+            font-weight: 400;
+        }
+        .add-domain-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .add-domain-form input {
+            flex: 1;
+            padding: 9px 12px;
+            border: 1px solid #d0d6e1;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .add-domain-form button {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 22px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .add-domain-form button:hover {
+            background: linear-gradient(90deg, #4f57bb 0%, #5a378a 100%);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 13px 12px;
+        }
+        th {
+            background: #f3f5fa;
+            color: #394067;
+            font-weight: 500;
+        }
+        tr {
+            border-bottom: 1px solid #f1f1f3;
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+        .delete-btn {
+            color: #fff;
+            background: #ea5858;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.97rem;
+            transition: background .2s;
+        }
+        .delete-btn:hover {
+            background: #b52828;
+        }
+        .loading, .no-domains {
+            text-align: center;
+            color: #888;
+            padding: 40px 0;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 4px;
+            }
+            .add-domain-form input, .add-domain-form button {
+                font-size: .96rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>域名列表</h2>
+        <form class="add-domain-form" id="addDomainForm">
+            <input type="text" id="domainInput" placeholder="输入域名，例如: example.com" required>
+            <button type="submit">添加域名</button>
+        </form>
+        <div id="domainTableWrapper">
+            <div class="loading">加载中...</div>
+        </div>
+    </div>
+    <script>
+        const API_BASE = 'https://agent.iosxapp.com/api/domain';
+
+        document.getElementById('addDomainForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const domain = document.getElementById('domainInput').value.trim();
+            if (!domain) return;
+            await addDomain(domain);
+        };
+
+        async function loadDomains() {
+            const wrapper = document.getElementById('domainTableWrapper');
+            wrapper.innerHTML = '<div class="loading">加载中...</div>';
+            try {
+                const resp = await fetch(`${API_BASE}/domain_list`);
+                const res = await resp.json();
+                if (res.code === 0 && Array.isArray(res.data) && res.data.length > 0) {
+                    renderDomainTable(res.data);
+                } else {
+                    wrapper.innerHTML = '<div class="no-domains">暂无域名数据</div>';
+                }
+            } catch (err) {
+                wrapper.innerHTML = '<div class="no-domains">加载失败，请稍后重试。</div>';
+            }
+        }
+
+        function renderDomainTable(domains) {
+            const wrapper = document.getElementById('domainTableWrapper');
+            let html = `<table>
+                <thead>
+                    <tr>
+                        <th style="width:60%;">域名</th>
+                        <th style="width:28%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+            for(const item of domains) {
+                // item.id, item.domain
+                html += `
+                    <tr>
+                        <td>${item.domain}</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteDomain(${item.id})">删除</button>
+                        </td>
+                    </tr>
+                `;
+            }
+            html += '</tbody></table>';
+            wrapper.innerHTML = html;
+        }
+
+        async function addDomain(domain) {
+            const btn = document.querySelector('.add-domain-form button');
+            btn.disabled = true;
+            btn.innerText = '添加中...';
+            try {
+                const resp = await fetch(`${API_BASE}/add_domain/${encodeURIComponent(domain)}`);
+                const res = await resp.json();
+                if (res.code === 0) {
+                    document.getElementById('domainInput').value = '';
+                    loadDomains();
+                } else {
+                    alert(res.message || '添加域名失败！');
+                }
+            } catch (err) {
+                alert('网络错误，无法添加域名');
+            }
+            btn.disabled = false;
+            btn.innerText = '添加域名';
+        }
+
+        async function deleteDomain(id) {
+            if (!confirm('确定要删除此域名吗？')) return;
+            try {
+                const resp = await fetch(`${API_BASE}/delete_domain/${id}`);
+                const res = await resp.json();
+                if (res.code === 0) {
+                    loadDomains();
+                } else {
+                    alert(res.message || '删除域名失败');
+                }
+            } catch (err) {
+                alert('网络错误，删除失败');
+            }
+        }
+
+        // 让 deleteDomain 在全局可访问
+        window.deleteDomain = deleteDomain;
+
+        // 初始化加载
+        loadDomains();
+    </script>
+</body>
+</html>

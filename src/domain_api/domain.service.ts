@@ -64,6 +64,8 @@ export class DomainService {
                     record.ip = item.address;
                  }
                 await this.twDomainRepository.save(record);
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
             } 
 
             if(record.ip != record.ip){
@@ -84,6 +86,21 @@ export class DomainService {
         //     await this.twDomainRepository.save(record);
         // }
         return new CResult(0, '', '');
+
+     }
+
+
+     async domain_list(): Promise<any> {
+
+        // let ip = await dns.resolve(domain);
+        let records = await this.twDomainRepository.find();
+      
+        //     record = new TwDomainEntity();
+        //     record.domain = domain;
+        //     record.ip = ip;
+        //     await this.twDomainRepository.save(record);
+        // }
+        return new CResult(0, '', records);
 
      }
 
@@ -112,20 +129,29 @@ export class DomainService {
     }
 
 
+    async delete_domain(id): Promise<any> {
+
+
+
+        let record = await this.twDomainRepository.findOne({where: {id: id}});
+
+        if(!record){
+            return new CResult(-1, '域名不存在', {});
+        }
+
+        await this.twDomainRepository.delete(id);
+        return new CResult(0, '', {});
+
+
+    }
+
+
     async warning_domain(domain: string,): Promise<any> {
 
 
         this.logService.domain_warning(domain_warning_template(domain));
-        
-        
+
     }
-
-
-    
-
-
-
-
 
 }
 
@@ -135,12 +161,13 @@ export const domain_warning_template = (domain):string =>{
 
     const template = `
 
-    ⚠️ 域名预警
+⚠️ 網域預警
     
-    ├域名： ${domain}
-    ├中华电信 (CHT)： '封禁'
-    ├台湾大哥大 (TWM)： '封禁'
-    ├远传电信 (FET)： '封禁'
+├網域： ${domain}
+├中華電信 (CHT)： '封禁'
+├台灣大哥大 (TWM)： '封禁'
+├遠傳電信(FET)： '封禁'
+├DNS RPZ封禁
 
     `;
     

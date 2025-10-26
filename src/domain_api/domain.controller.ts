@@ -21,6 +21,22 @@ export class DomainController {
         return await this.domainService.monitor_domain();
     }
 
+    @Get('domain_list')
+    async domainList(): Promise<any> {
+        return await this.domainService.domain_list();
+    }
+
+    @Get('add_domain/:domain')
+    async addDomain(@Param('domain') domain: string): Promise<any> {
+
+        return await this.domainService.add_domain(domain);
+    }
+
+    @Get('delete_domain/:id')
+    async deleteDomain(@Param('id') id: number): Promise<any> {
+        return await this.domainService.delete_domain(id);
+    }
+
     
     
 
