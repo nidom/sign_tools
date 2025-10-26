@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { LogService } from 'src/actions/log.service';
 import * as dns from 'dns';
 import { promisify } from 'util';
-
+import { CResult } from 'src/utils';
 const lookup = promisify(dns.lookup);
 
 const myDict = {
@@ -30,6 +30,7 @@ export class DomainService {
     constructor(
         @InjectRepository(TwDomainEntity)
         private readonly twDomainRepository: Repository<TwDomainEntity>,
+        private readonly logService: LogService,
     ) { }
   
     async monitor_domain(): Promise<any> {
@@ -39,7 +40,7 @@ export class DomainService {
         //   });
 
         const resolver = new dns2({
-            nameServers: ['168.95.1.1'], // dns.hinet.net 的 IP 地址
+            nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
             timeout: 5000
           });
         // let ip = await dns.resolve(domain);
@@ -48,8 +49,27 @@ export class DomainService {
 
             // const result = await lookup(record.domain,{family: 4});
             // console.log(result); 
-            const result2 = await resolver.resolveA(record.domain);
-            console.log(result2.answers);
+            const result = await resolver.resolveA(record.domain);
+            // console.log(result2.answers);
+            if(result.answers &&result.answers.length > 0){
+
+                let item  = result.answers[0];
+                if(item.address == '182.173.0.181'){
+                    record.ip = '182.173.0.181';
+                    //预警
+                    this.warning_domain(record.domain);
+
+
+                 }else{
+                    record.ip = item.address;
+                 }
+                await this.twDomainRepository.save(record);
+            } 
+
+            if(record.ip != record.ip){
+                record.ip = record.ip;
+                await this.twDomainRepository.save(record);
+            }
             // let ip = await dns.resolve(record.domain);
             // if(ip != record.ip){
             //     record.ip = ip;
@@ -63,9 +83,43 @@ export class DomainService {
         //     record.ip = ip;
         //     await this.twDomainRepository.save(record);
         // }
-        return '';
+        return new CResult(0, '', '');
 
      }
+
+
+    async add_domain(domain: string): Promise<any> {
+
+
+
+        let record = await this.twDomainRepository.findOne({where: {domain: domain}});
+
+        if(record){
+            return new CResult(-1, '域名已存在', {});
+        }
+
+
+        // const resolver = new dns2({
+        //     nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
+        //     timeout: 5000
+        //  });
+        let new_record = new TwDomainEntity();
+        new_record.domain = domain;
+        new_record.ip = '';
+        await this.twDomainRepository.save(new_record);
+        return new CResult(0, '', {});
+
+    }
+
+
+    async warning_domain(domain: string,): Promise<any> {
+
+
+        this.logService.domain_warning(domain_warning_template(domain));
+        
+        
+    }
+
 
     
 
@@ -74,3 +128,22 @@ export class DomainService {
 
 
 }
+
+
+export const domain_warning_template = (domain):string =>{
+
+
+    const template = `
+
+    ⚠️ 域名预警
+    
+    ├域名： ${domain}
+    ├中华电信 (CHT)： '封禁'
+    ├台湾大哥大 (TWM)： '封禁'
+    ├远传电信 (FET)： '封禁'
+
+    `;
+    
+    return template
+    }    
+    

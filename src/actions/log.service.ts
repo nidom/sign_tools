@@ -62,6 +62,12 @@ export class LogService {
         this.logBot.sendMessage(CHANNEL_ID_SIGN, udid+'证书配置异常请查看');
    }
 
+   async domain_warning(domain: string) {
+
+
+    this.logBot.sendMessage('-1002732460679',domain);
+}
+
      
 //     async tg_message(message: string,group_id) {
 
