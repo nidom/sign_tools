@@ -3,11 +3,12 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
-import DNS from 'dns2';
+import DNS2 from 'dns2';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TwDomainEntity } from 'src/entitis/tw_domain.entity';
 import { Repository } from 'typeorm';
 import { LogService } from 'src/actions/log.service';
+
 const myDict = {
 
     '168.95.1.1': '中华电信 (CHT)',
@@ -29,15 +30,23 @@ export class DomainService {
   
     async monitor_domain(): Promise<any> {
 
-        const customResolver = new DNS({
-            nameServers: ['68.95.1.1', '168.95.192.1']
+        // const customResolver = new DNS({
+        //     nameServers: ['68.95.1.1', '168.95.192.1']
+        //   });
+
+
+          const client = new DNS2({
+            // 可选配置
+                dns: '68.95.1.1',   // 上游 DNS 服务器
+                port: 53,
+            // recursive: true  // 默认开启递归查询
           });
         // let ip = await dns.resolve(domain);
         let records = await this.twDomainRepository.find();
         for(let record of records){
         
-            const result2 = await customResolver.resolve(record.domain, 'A');
-            console.log(result2);
+            const result2 = await client.resolveA(record.domain);
+            console.log(result2.answers);
             // let ip = await dns.resolve(record.domain);
             // if(ip != record.ip){
             //     record.ip = ip;
