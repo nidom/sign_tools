@@ -93,13 +93,18 @@ export class DomainService {
      async domain_list(): Promise<any> {
 
         // let ip = await dns.resolve(domain);
-        let records = await this.twDomainRepository.find();
       
         //     record = new TwDomainEntity();
         //     record.domain = domain;
         //     record.ip = ip;
         //     await this.twDomainRepository.save(record);
         // }
+
+        let  records = await this.twDomainRepository.find({
+            order: {
+                id: 'DESC'
+            }
+        });
         return new CResult(0, '', records);
 
      }
@@ -108,9 +113,15 @@ export class DomainService {
     async add_domain(domain: string): Promise<any> {
 
 
+        // 判断domain是否合法
+        // 域名一般只允许字母、数字、短横线，并以字母或数字开头结尾，中间可以有点
+        const domainRegex = /^(?!-)[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
+        if (!domainRegex.test(domain)) {
+            return new CResult(-1, '域名格式不正确', {});
+        }
+
 
         let record = await this.twDomainRepository.findOne({where: {domain: domain}});
-
         if(record){
             return new CResult(-1, '域名已存在', {});
         }
