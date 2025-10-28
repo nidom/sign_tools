@@ -66,7 +66,7 @@ export class LogService {
 
 
     this.logBot.sendMessage('-1002732460679',domain);
-    this.logBot.sendMessage('-4829170846',domain);
+    this.logBot.sendMessage('-1003293327856',domain);
 }
 
      
