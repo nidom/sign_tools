@@ -64,14 +64,24 @@ export class DomainService {
                     record.ip = item.address;
                  }
                 await this.twDomainRepository.save(record);
+            } else {
+                //无解析
+                // record.ip = '';
+                // await this.twDomainRepository.save(record);
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            } 
+                console.log(record.domain + '无解析');
+
+
+            }
 
             if(record.ip != record.ip){
                 record.ip = record.ip;
                 await this.twDomainRepository.save(record);
             }
+      
+
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
             // let ip = await dns.resolve(record.domain);
             // if(ip != record.ip){
             //     record.ip = ip;
