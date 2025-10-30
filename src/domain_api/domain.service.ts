@@ -69,18 +69,17 @@ export class DomainService {
                 // record.ip = '';
                 // await this.twDomainRepository.save(record);
 
-                console.log(record.domain + '无解析');
+                // console.log(record.domain + '无解析');
 
-
+                this.warning_domain_no_resolve(record.domain);
+          
             }
 
             if(record.ip != record.ip){
                 record.ip = record.ip;
                 await this.twDomainRepository.save(record);
             }
-      
-
-
+    
             await new Promise(resolve => setTimeout(resolve, 1000));
             // let ip = await dns.resolve(record.domain);
             // if(ip != record.ip){
@@ -151,26 +150,29 @@ export class DomainService {
 
 
     async delete_domain(id): Promise<any> {
-
-
-
+        
         let record = await this.twDomainRepository.findOne({where: {id: id}});
-
         if(!record){
             return new CResult(-1, '域名不存在', {});
         }
 
         await this.twDomainRepository.delete(id);
         return new CResult(0, '', {});
-
-
-    }
+     }
 
 
     async warning_domain(domain: string,): Promise<any> {
 
 
         this.logService.domain_warning(domain_warning_template(domain));
+
+    }
+
+    
+    async warning_domain_no_resolve(domain: string): Promise<any> {
+
+
+        this.logService.domain_warning(domain_warning_template_no_resolve(domain));
 
     }
 
@@ -194,4 +196,20 @@ export const domain_warning_template = (domain):string =>{
     
     return template
     }    
+
+
+    export const domain_warning_template_no_resolve = (domain):string =>{
+
+
+        const template = `
+    
+    ⚠️ 網域預警
+        
+    ├網域： ${domain}
+    ├無解析记录,可能被封禁
+    
+        `;
+        
+        return template
+  }    
     
