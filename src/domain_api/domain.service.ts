@@ -57,6 +57,14 @@ export class DomainService {
 
             // const result = await lookup(record.domain,{family: 4});
             // console.log(result); 
+
+            try {
+                await resolver.resolveA(record.domain);
+
+            } catch (error) {
+                
+                console.log(error);
+            }
             const result = await resolver.resolveA(record.domain);
 
             console.log(result);
