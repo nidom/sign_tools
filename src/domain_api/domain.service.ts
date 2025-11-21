@@ -59,16 +59,15 @@ export class DomainService {
         
         // 使用自定义 fetch 初始化 dohjs 解析器
         // 使用 Cloudflare 的 DoH 服务作为上游 resolver
-        const resolver = new doh.DohResolver('https://1.1.1.1/dns-query', customFetch);
+        const resolver = new doh.DohResolver('https://dns.hinet.net/dns-query', customFetch);
         
         // 执行 DoH 查询
-        resolver.query('example.com', 'A')
-            .then(response => {
-                console.log('DNS 解析结果:', response.answers[0].data);
-            })
-            .catch(error => {
-                console.error('DNS 解析失败:', error);
-            });
+        try {
+            const response = await resolver.query('example.com', 'A');
+            console.log('DNS 解析结果:', response.answers[0].data);
+        } catch (error) {
+            console.error('DNS 解析失败:', error);
+        }
 
         // const resolver = new dns2({
         //     nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
