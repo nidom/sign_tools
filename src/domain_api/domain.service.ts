@@ -63,7 +63,7 @@ export class DomainService {
         
         // 执行 DoH 查询
         try {
-            const response = await resolver.query('google.com', 'A');
+            const response = await resolver.query('toptiertradertex.com', 'A');
             console.log('DNS 解析结果:', response.answers[0].data);
         } catch (error) {
             console.error('DNS 解析失败:', error);
