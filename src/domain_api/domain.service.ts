@@ -62,84 +62,77 @@ export class DomainService {
         const resolver = new doh.DohResolver('https://dns.hinet.net/dns-query', customFetch);
         
         // 执行 DoH 查询
+  
+    
+        // let ip = await dns.resolve(domain);
+        let records = await this.twDomainRepository.find();
+        for(let record of records){
+
+            // const result = await lookup(record.domain,{family: 4});
+            // console.log(result); 
+
+
+            let ip = await this.dns_ip(record.domain,resolver);
+            // console.log(result);
+            // console.log(rsult2.answers);
+            if(ip){
+
+                if(ip == '182.173.0.181'){
+                    record.ip = '182.173.0.181';
+                    //预警
+                    this.warning_domain(record.domain);
+
+
+                 }else{
+                    record.ip = ip;
+                 }
+                await this.twDomainRepository.save(record);
+            } else {
+                //无解析
+                // record.ip = '';
+                // await this.twDomainRepository.save(record);
+
+                // console.log(record.domain + '无解析');
+                
+
+                this.warning_domain_no_resolve(record.domain);
+          
+            }
+
+            if(record.ip != record.ip){
+                record.ip = record.ip;
+                await this.twDomainRepository.save(record);
+            }
+    
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            // let ip = await dns.resolve(record.domain);
+            // if(ip != record.ip){
+            //     record.ip = ip;
+            //     await this.twDomainRepository.save(record);
+            // }
+        }
+      
+        // if(!record){
+        //     record = new TwDomainEntity();
+        //     record.domain = domain;
+        //     record.ip = ip;
+        //     await this.twDomainRepository.save(record);
+        // }
+        return new CResult(0, '', '');
+
+     }  
+    //解析ip
+     async dns_ip(domain,resolver): Promise<any> {
         try {
-            const response = await resolver.query('toptiertradertex.com', 'A');
-            console.log('DNS 解析结果:', response.answers[0].data);
+            const response = await resolver.query(domain, 'A');
+            return  response.answers[0].data;
+
+         
         } catch (error) {
+
             console.error('DNS 解析失败:', error);
         }
 
-        // const resolver = new dns2({
-        //     nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
-        //     timeout: 5000,
-        //     tcp:true,
-        //     agent:new HttpsProxyAgent(proxyUrl2), 
-    
-        //   });
-        // console.log('----');
-        // console.log(resolver);
-        // // let ip = await dns.resolve(domain);
-        // let records = await this.twDomainRepository.find();
-        // for(let record of records){
-
-        //     // const result = await lookup(record.domain,{family: 4});
-        //     // console.log(result); 
-
-        //     try {
-        //         await resolver.resolveA(record.domain);
-
-        //     } catch (error) {
-                
-        //         console.log(error);
-        //     }
-        //     const result = await resolver.resolveA(record.domain);
-
-        //     console.log(result);
-        //     // console.log(result2.answers);
-        //     if(result.answers &&result.answers.length > 0){
-
-        //         let item  = result.answers[0];
-        //         if(item.address == '182.173.0.181'){
-        //             record.ip = '182.173.0.181';
-        //             //预警
-        //             this.warning_domain(record.domain);
-
-
-        //          }else{
-        //             record.ip = item.address;
-        //          }
-        //         await this.twDomainRepository.save(record);
-        //     } else {
-        //         //无解析
-        //         // record.ip = '';
-        //         // await this.twDomainRepository.save(record);
-
-        //         // console.log(record.domain + '无解析');
-
-        //         this.warning_domain_no_resolve(record.domain);
-          
-        //     }
-
-        //     if(record.ip != record.ip){
-        //         record.ip = record.ip;
-        //         await this.twDomainRepository.save(record);
-        //     }
-    
-        //     await new Promise(resolve => setTimeout(resolve, 1000));
-        //     // let ip = await dns.resolve(record.domain);
-        //     // if(ip != record.ip){
-        //     //     record.ip = ip;
-        //     //     await this.twDomainRepository.save(record);
-        //     // }
-        // }
-      
-        // // if(!record){
-        // //     record = new TwDomainEntity();
-        // //     record.domain = domain;
-        // //     record.ip = ip;
-        // //     await this.twDomainRepository.save(record);
-        // // }
-        // return new CResult(0, '', '');
 
      }
 
