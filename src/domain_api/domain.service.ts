@@ -4,6 +4,7 @@ https://docs.nestjs.com/providers#services
 
 import { Injectable } from '@nestjs/common';
 const dns2 = require('dns2');
+const { Client } = require('dns2');
 import { InjectRepository } from '@nestjs/typeorm';
 import { TwDomainEntity } from 'src/entitis/tw_domain.entity';
 import { Repository } from 'typeorm';
@@ -13,6 +14,10 @@ import { promisify } from 'util';
 import { CResult } from 'src/utils';
 import { agent } from 'supertest';
 import { HttpsProxyAgent } from 'https-proxy-agent';
+
+const fetch = require('node-fetch');
+
+const doh = require('dohjs');
 const lookup = promisify(dns.lookup);
 
 const myDict = {
@@ -41,78 +46,101 @@ export class DomainService {
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
         const proxyUrl = 'http://user:pass@proxy.example.com:8080'; // 或 http://127.0.0.1:8080
-        const proxyUrl2 = 'http://121.237.41.188:55150';
-        const resolver = new dns2({
-            nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
-            timeout: 5000,
-            tcp:true,
-            agent:new HttpsProxyAgent(proxyUrl2), 
+        const proxyUrl2 = 'https://121.237.41.188:55150';
+
+
+        const agent = new HttpsProxyAgent(proxyUrl2);
+
+        const customFetch = (url, options) => {
+            // 确保 options 中包含了 agent
+            options.agent = agent;
+            return fetch(url, options);
+        };
+        
+        // 使用自定义 fetch 初始化 dohjs 解析器
+        // 使用 Cloudflare 的 DoH 服务作为上游 resolver
+        const resolver = new doh.DohResolver('https://1.1.1.1/dns-query', customFetch);
+        
+        // 执行 DoH 查询
+        resolver.query('example.com', 'A')
+            .then(response => {
+                console.log('DNS 解析结果:', response.answers[0].data);
+            })
+            .catch(error => {
+                console.error('DNS 解析失败:', error);
+            });
+
+        // const resolver = new dns2({
+        //     nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
+        //     timeout: 5000,
+        //     tcp:true,
+        //     agent:new HttpsProxyAgent(proxyUrl2), 
     
-          });
-        console.log('----');
-        console.log(resolver);
-        // let ip = await dns.resolve(domain);
-        let records = await this.twDomainRepository.find();
-        for(let record of records){
+        //   });
+        // console.log('----');
+        // console.log(resolver);
+        // // let ip = await dns.resolve(domain);
+        // let records = await this.twDomainRepository.find();
+        // for(let record of records){
 
-            // const result = await lookup(record.domain,{family: 4});
-            // console.log(result); 
+        //     // const result = await lookup(record.domain,{family: 4});
+        //     // console.log(result); 
 
-            try {
-                await resolver.resolveA(record.domain);
+        //     try {
+        //         await resolver.resolveA(record.domain);
 
-            } catch (error) {
+        //     } catch (error) {
                 
-                console.log(error);
-            }
-            const result = await resolver.resolveA(record.domain);
+        //         console.log(error);
+        //     }
+        //     const result = await resolver.resolveA(record.domain);
 
-            console.log(result);
-            // console.log(result2.answers);
-            if(result.answers &&result.answers.length > 0){
+        //     console.log(result);
+        //     // console.log(result2.answers);
+        //     if(result.answers &&result.answers.length > 0){
 
-                let item  = result.answers[0];
-                if(item.address == '182.173.0.181'){
-                    record.ip = '182.173.0.181';
-                    //预警
-                    this.warning_domain(record.domain);
+        //         let item  = result.answers[0];
+        //         if(item.address == '182.173.0.181'){
+        //             record.ip = '182.173.0.181';
+        //             //预警
+        //             this.warning_domain(record.domain);
 
 
-                 }else{
-                    record.ip = item.address;
-                 }
-                await this.twDomainRepository.save(record);
-            } else {
-                //无解析
-                // record.ip = '';
-                // await this.twDomainRepository.save(record);
+        //          }else{
+        //             record.ip = item.address;
+        //          }
+        //         await this.twDomainRepository.save(record);
+        //     } else {
+        //         //无解析
+        //         // record.ip = '';
+        //         // await this.twDomainRepository.save(record);
 
-                // console.log(record.domain + '无解析');
+        //         // console.log(record.domain + '无解析');
 
-                this.warning_domain_no_resolve(record.domain);
+        //         this.warning_domain_no_resolve(record.domain);
           
-            }
+        //     }
 
-            if(record.ip != record.ip){
-                record.ip = record.ip;
-                await this.twDomainRepository.save(record);
-            }
+        //     if(record.ip != record.ip){
+        //         record.ip = record.ip;
+        //         await this.twDomainRepository.save(record);
+        //     }
     
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            // let ip = await dns.resolve(record.domain);
-            // if(ip != record.ip){
-            //     record.ip = ip;
-            //     await this.twDomainRepository.save(record);
-            // }
-        }
-      
-        // if(!record){
-        //     record = new TwDomainEntity();
-        //     record.domain = domain;
-        //     record.ip = ip;
-        //     await this.twDomainRepository.save(record);
+        //     await new Promise(resolve => setTimeout(resolve, 1000));
+        //     // let ip = await dns.resolve(record.domain);
+        //     // if(ip != record.ip){
+        //     //     record.ip = ip;
+        //     //     await this.twDomainRepository.save(record);
+        //     // }
         // }
-        return new CResult(0, '', '');
+      
+        // // if(!record){
+        // //     record = new TwDomainEntity();
+        // //     record.domain = domain;
+        // //     record.ip = ip;
+        // //     await this.twDomainRepository.save(record);
+        // // }
+        // return new CResult(0, '', '');
 
      }
 
