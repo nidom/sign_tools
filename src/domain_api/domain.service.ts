@@ -41,12 +41,12 @@ export class DomainService {
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
         const proxyUrl = 'http://user:pass@proxy.example.com:8080'; // 或 http://127.0.0.1:8080
-
+        const proxyUrl2 = 'http://121.237.41.188:55150';
         const resolver = new dns2({
             nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
             timeout: 5000,
             tcp:true,
-            agent:new HttpsProxyAgent(proxyUrl), 
+            agent:new HttpsProxyAgent(proxyUrl2), 
     
           });
         console.log('----');
