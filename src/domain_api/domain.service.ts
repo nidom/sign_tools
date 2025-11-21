@@ -49,6 +49,8 @@ export class DomainService {
             agent:new HttpsProxyAgent(proxyUrl), 
     
           });
+        console.log('----');
+        console.log(resolver);
         // let ip = await dns.resolve(domain);
         let records = await this.twDomainRepository.find();
         for(let record of records){
