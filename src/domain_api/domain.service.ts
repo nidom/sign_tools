@@ -3,8 +3,6 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
-const dns2 = require('dns2');
-const { Client } = require('dns2');
 import { InjectRepository } from '@nestjs/typeorm';
 import { TwDomainEntity } from 'src/entitis/tw_domain.entity';
 import { Repository } from 'typeorm';
@@ -63,15 +61,20 @@ export class DomainService {
                 // console.error(`请求代理IP接口失败，状态码: ${response.status}`);
             }
         } catch (err) {
-            this.logService.domain_warning('域名监控代理异常');
+
+         
 
         }
 
         let agentIP = null;
         if(proxyApiJson){
           
+            console.log(proxyApiJson);
             let ipitem = proxyApiJson[0];
             agentIP = ipitem.proxy;
+        }else {
+
+            this.logService.domain_warning('域名监控代理异常');
         }
         const proxyUrl = 'https://'+agentIP;
 
