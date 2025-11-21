@@ -45,11 +45,38 @@ export class DomainService {
         // const customResolver = new DNS({
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
-        const proxyUrl = 'http://user:pass@proxy.example.com:8080'; // 或 http://127.0.0.1:8080
-        const proxyUrl2 = 'https://121.237.41.188:55150';
 
 
-        const agent = new HttpsProxyAgent(proxyUrl2);
+        // INSERT_YOUR_CODE
+        // 发送 GET 请求到指定 URL 并获取 JSON 数据
+        const ipApiUrl = 'http://diy.qydailiip.com/api/ip/api?order=202511212225174779&num=1&sep=\\n&anonymity=&model=&protocol=https&isp=&kill_address=&kill_port=&address=&port=&type=json&apikey=3255889f39a27af873e9f742ff32eada';
+        let proxyApiJson = null;
+        try {
+            const response = await fetch(ipApiUrl);
+            if (response.ok) {
+                proxyApiJson = await response.json();
+            
+                // let agentip = proxyApiJson
+                // 可以在这里对 proxyApiJson 进行处理或日志
+                // console.log('代理API返回:', proxyApiJson);
+            } else {
+                // console.error(`请求代理IP接口失败，状态码: ${response.status}`);
+            }
+        } catch (err) {
+            this.logService.domain_warning('域名监控代理异常');
+
+        }
+
+        let agentIP = null;
+        if(proxyApiJson){
+          
+            let ipitem = proxyApiJson[0];
+            agentIP = ipitem.proxy;
+        }
+        const proxyUrl = 'https://'+agentIP;
+
+
+        const agent = new HttpsProxyAgent(proxyUrl);
 
         const customFetch = (url, options) => {
             // 确保 options 中包含了 agent
