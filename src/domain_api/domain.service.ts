@@ -11,6 +11,8 @@ import { LogService } from 'src/actions/log.service';
 import * as dns from 'dns';
 import { promisify } from 'util';
 import { CResult } from 'src/utils';
+import { agent } from 'supertest';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 const lookup = promisify(dns.lookup);
 
 const myDict = {
@@ -38,10 +40,14 @@ export class DomainService {
         // const customResolver = new DNS({
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
+        const proxyUrl = 'http://user:pass@proxy.example.com:8080'; // 或 http://127.0.0.1:8080
 
         const resolver = new dns2({
             nameServers: ['dns.hinet.net'], // dns.hinet.net 的 IP 地址
-            timeout: 5000
+            timeout: 5000,
+            tcp:true,
+            agent:new HttpsProxyAgent(proxyUrl), 
+    
           });
         // let ip = await dns.resolve(domain);
         let records = await this.twDomainRepository.find();
