@@ -90,9 +90,10 @@ export class DomainService {
         // 使用自定义 fetch 初始化 dohjs 解析器
         // 使用 Cloudflare 的 DoH 服务作为上游 resolver
         const resolver = new doh.DohResolver('https://dns.hinet.net/dns-query', customFetch);
-        
+        const resolver_google = new doh.DohResolver('https://dns.google/dns-query');
+
         // 执行 DoH 查询
-  
+   
     
         // let ip = await dns.resolve(domain);
         let records = await this.twDomainRepository.find();
@@ -111,8 +112,6 @@ export class DomainService {
                     record.ip = '182.173.0.181';
                     //预警
                     this.warning_domain(record.domain);
-
-
                  }else{
                     record.ip = ip;
                  }
@@ -123,9 +122,15 @@ export class DomainService {
                 // await this.twDomainRepository.save(record);
 
                 // console.log(record.domain + '无解析');
-                
 
-                this.warning_domain_no_resolve(record.domain);
+                //二次校验域名是否被封禁
+                let repeat_ip = await this.dns_ip(record.domain,resolver_google);
+  
+                if(!repeat_ip){
+                    this.warning_domain_no_resolve(record.domain);
+
+                }
+
           
             }
 
