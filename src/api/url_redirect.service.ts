@@ -29,7 +29,6 @@ export class UrlRedirectService {
   }
 
 
-
   //迁移
   async redirect(params: string, ssid: string, request): Promise<any> {
 

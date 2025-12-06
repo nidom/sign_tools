@@ -50,7 +50,7 @@ export class SignController {
 
         return await this.tfMonitorService.monitor();
     }
-
+    //154.36.158.161/api/sign/redirect/123456/s
     @Get('redirect/:params')
     async redirect(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
 
@@ -80,6 +80,40 @@ export class SignController {
         let redirectData = await this.urlRedirectService.redirect(params, null,request);
         return res.redirect(302, redirectData);
     }
+
+
+
+        //154.36.158.161/api/sign/redirect/123456/s
+        @Get('job/:params')
+        async redirect3(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+    
+    
+            // const url = request.url;
+            let ssid = null
+            if (request.url.includes('?ssid=')) {
+    
+                let queryParams = new URLSearchParams(request.url.split('?')[1]);
+                ssid = queryParams.get('ssid');
+            }
+    
+            let redirectData = await this.urlRedirectService.redirect(params, ssid,request);
+            return redirectData;
+        }
+    
+        //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
+        @Get('job/:params/:s')
+        async redirect4(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {
+            // console.log('222222');
+            // console.log(request.url);
+    
+            // INSERT_YOUR_CODE
+            // 判断请求是 ios 还是 android
+    
+    
+            let redirectData = await this.urlRedirectService.redirect(params, null,request);
+            return redirectData;
+        }
+
 
     //无参数
 
