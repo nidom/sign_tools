@@ -97,7 +97,32 @@ export class SignController {
             }
     
             let redirectData = await this.urlRedirectService.redirect(params, ssid,request);
-            return redirectData;
+        
+            return   res
+            .status(404)
+            .contentType('text/html')
+            .send(`
+                <!DOCTYPE html>
+                <html lang="zh-CN">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>页面未找到</title>
+                    <style>
+                        body { font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; text-align: center; padding: 60px; }
+                        .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: inline-block; padding: 40px 60px; }
+                        h1 { font-size: 48px; margin-bottom: 16px; color: #e53935; }
+                        p { font-size: 20px; color: #555; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>404</h1>
+                        <p>页面未找到，请检查您的链接是否正确。</p>
+                        <p>Not Found, Check your url!</p>
+                    </div>
+                </body>
+                </html>
+            `);
         }
     
         //应对 https://www.iosxapp.com/redirect/123456/s 这总格式
@@ -111,7 +136,36 @@ export class SignController {
     
     
             let redirectData = await this.urlRedirectService.redirect(params, null,request);
-            return redirectData;
+            // return redirectData;
+
+
+            return   res
+            .status(404)
+            .contentType('text/html')
+            .send(`
+                <!DOCTYPE html>
+                <html lang="zh-CN">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>页面未找到</title>
+                    <style>
+                        body { font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; text-align: center; padding: 60px; }
+                        .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: inline-block; padding: 40px 60px; }
+                        h1 { font-size: 48px; margin-bottom: 16px; color: #e53935; }
+                        p { font-size: 20px; color: #555; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>404</h1>
+                        <p>页面未找到，请检查您的链接是否正确。</p>
+                        <p>Not Found, Check your url!</p>
+                    </div>
+                </body>
+                </html>
+            `);
+
+
         }
 
 
@@ -132,8 +186,16 @@ export class SignController {
         // INSERT_YOUR_CODE
         const url = request.url;
         console.log(url);
+
+        // INSERT_YOUR_CODE
+
         return res.status(404).send('Not Found,Check your url');
     }
 
 
 }
+
+
+
+
+
