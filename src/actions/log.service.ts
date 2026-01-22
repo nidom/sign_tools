@@ -65,8 +65,7 @@ export class LogService {
    async domain_warning(domain: string) {
 
 
-    this.logBot.sendMessage('-1002732460679',domain);
-    this.logBot.sendMessage('-1003293327856',domain);
+    this.logBot.sendMessage('-5262630543',domain);
 }
 
      
