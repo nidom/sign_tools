@@ -23,7 +23,8 @@ export class StartService implements OnApplicationBootstrap {
   async  onApplicationBootstrap() {
 
     await this.loadRoleInfoToRedis()
-        console.log('数据缓存加载成功')
+
+    console.log('数据缓存加载成功')
   }
 
   async loadRoleInfoToRedis(){ 

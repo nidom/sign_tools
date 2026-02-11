@@ -43,16 +43,24 @@ export class LogService {
         
      }
 
-     
-    async tf_warning(url: string) {
+
+     async disk_warning(disk_space: string) {
 
 
 
-        this.logBot.sendMessage(CHANNEL_ID_SIGN,'TF 链接访问异常:'+url);
+        this.logBot.sendMessage(CHANNEL_ID_SIGN, '硬盘剩余空间:'+disk_space);
 
 
         
      }
+
+
+     
+    async tf_warning(url: string) {
+
+        this.logBot.sendMessage(CHANNEL_ID_SIGN,'TF 链接访问异常:'+url);
+
+    }
   
         
 

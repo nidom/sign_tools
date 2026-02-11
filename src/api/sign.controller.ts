@@ -21,6 +21,12 @@ export class SignController {
         private readonly tfMonitorService: TFMonitorService,
     ) { }
 
+    @Get('disk_warning')
+    async disk_warning(@Req() request: Request): Promise<any> {
+
+        return await this.signService.disk_warning();
+    }
+
     @Get('udid_monitor')
     async udid_monitor(@Req() request: Request): Promise<any> {
 

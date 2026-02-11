@@ -203,4 +203,31 @@ export class UDIDMonitorService {
   
   }
 
+
+
+// INSERT_YOUR_CODE
+async disk_warning(): Promise<void> {
+
+  const { exec } = require('child_process');
+  exec('df -k /', (error, stdout, stderr) => {
+    if (error) {
+      this.logService.disk_warning(`Error checking disk space: ${error.message}`);
+      return;
+    }
+    const lines = stdout.trim().split('\n');
+    if (lines.length >= 2) {
+      // Linux/macOS format: Filesystem 1024-blocks Used Available Capacity Mounted on
+      const parts = lines[1].split(/\s+/);
+      // "Available" is usually the 4th column (index 3)
+      const availableKB = parseInt(parts[3], 10);
+      const availableGB = (availableKB / 1024 / 1024).toFixed(2);
+      this.logService.disk_warning(`当前硬盘剩余空间: ${availableGB} GB`);
+    } else {
+      this.logService.disk_warning('读取磁盘空间信息失败');
+    }
+  });
+
+}
+  
+
 }
