@@ -48,7 +48,6 @@ export class UrlRedirectService {
 
     let appIDRecord = await this.appIDRepository.findOne({ where: { in_link: params } });
 
-
     //如果有关联 app 再判断请求类型
     if (appIDRecord && appIDRecord.in_kid > 0) {
 

@@ -48,7 +48,7 @@ export class LogService {
 
 
 
-        this.logBot.sendMessage(CHANNEL_ID_SIGN, '硬盘剩余空间:'+disk_space);
+        this.logBot.sendMessage(CHANNEL_ID_SIGN, +disk_space);
 
 
         

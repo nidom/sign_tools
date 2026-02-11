@@ -228,6 +228,58 @@ async disk_warning(): Promise<void> {
   });
 
 }
+
+
+// INSERT_YOUR_CODE
+async cleanOldFiles(): Promise<void> {
+
+  let dirPath = '/www/wwwroot/iosxapp.com/data/uploads/super_sign_ipa'
+  const fs = require('fs');
+  const path = require('path');
+  
+  try {
+    const files: string[] = await new Promise((resolve, reject) => {
+      fs.readdir(dirPath, (err, files) => {
+        if (err) reject(err);
+        else resolve(files);
+      });
+    });
+
+    const now = Date.now();
+
+    for (let file of files) {
+      const filePath = path.join(dirPath, file);
+      const stat: any = await new Promise((resolve, reject) => {
+        fs.stat(filePath, (err, stat) => {
+          if (err) reject(err);
+          else resolve(stat);
+        });
+      });
+
+      if (stat.isFile()) {
+        const mtime = stat.mtime.getTime();
+        if ((now - mtime) > 3 * 60 * 60 * 1000) { // 3 hours in milliseconds
+          await new Promise((resolve, reject) => {
+            fs.unlink(filePath, (err) => {
+              // ignore error: file may be removed already
+              resolve(undefined);
+            });
+          });
+        }
+      }
+    }
+
+    this.logService.disk_warning(`清理ipa文件完成`);
+  } catch (error) {
+    if(this.logService && this.logService.disk_warning) {
+      this.logService.disk_warning(`清理文件出错: ${error.message || error}`);
+    }
+  }
+}
+
+
+
+
   
 
 }
