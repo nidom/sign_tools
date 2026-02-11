@@ -27,6 +27,12 @@ export class SignController {
         return await this.signService.disk_warning();
     }
 
+    @Get('clean_old_files')
+    async clean_old_files(@Req() request: Request): Promise<any> {
+
+        return await this.signService.cleanOldFiles();
+    }
+
     @Get('udid_monitor')
     async udid_monitor(@Req() request: Request): Promise<any> {
 
