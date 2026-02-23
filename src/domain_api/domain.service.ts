@@ -43,8 +43,6 @@ export class DomainService {
         // const customResolver = new DNS({
         //     nameServers: ['68.95.1.1', '168.95.192.1']
         //   });
-
-
         // INSERT_YOUR_CODE
         // 发送 GET 请求到指定 URL 并获取 JSON 数据
         const ipApiUrl = 'http://diy.qydailiip.com/api/ip/api?order=202511212225174779&num=1&sep=\\n&anonymity=&model=&protocol=https&isp=&kill_address=&kill_port=&address=&port=&type=json&apikey=3255889f39a27af873e9f742ff32eada';

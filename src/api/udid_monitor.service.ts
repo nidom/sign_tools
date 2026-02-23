@@ -210,12 +210,9 @@ export class UDIDMonitorService {
 // INSERT_YOUR_CODE
 async disk_warning(): Promise<any> {
 
-  const { exec } = require('child_process');
-  exec('df -k /', (error, stdout, stderr) => {
-    if (error) {
-      this.logService.disk_warning(`Error checking disk space: ${error.message}`);
-      return;
-    }
+  const { execSync } = require('child_process');
+  try {
+    const stdout = execSync('df -k /', { encoding: 'utf8' });
     const lines = stdout.trim().split('\n');
     if (lines.length >= 2) {
       // Linux/macOS format: Filesystem 1024-blocks Used Available Capacity Mounted on
@@ -228,7 +225,9 @@ async disk_warning(): Promise<any> {
     } else {
       this.logService.disk_warning('读取磁盘空间信息失败');
     }
-  });
+  } catch (error) {
+    this.logService.disk_warning(`Error checking disk space: ${error.message}`);
+  }
 
 }
 
