@@ -26,9 +26,10 @@ export class TFMonitorService {
 
     // 监控URL可访问性的方法
     async monitorUrlAccessibility(url: string): Promise<void> {
+
         try {
+            
             const response = await fetch(url);
-     
             if (response.status === 404) {
 
                 if(!this.urlsCache.includes(url)){

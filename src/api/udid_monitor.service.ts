@@ -199,14 +199,16 @@ export class UDIDMonitorService {
         // this.udid_warning(record.udid,record.cert_iss);
       }
     }
+    
 
   
   }
 
 
 
+//读取服务器磁盘空间
 // INSERT_YOUR_CODE
-async disk_warning(): Promise<void> {
+async disk_warning(): Promise<any> {
 
   const { exec } = require('child_process');
   exec('df -k /', (error, stdout, stderr) => {
@@ -221,7 +223,8 @@ async disk_warning(): Promise<void> {
       // "Available" is usually the 4th column (index 3)
       const availableKB = parseInt(parts[3], 10);
       const availableGB = (availableKB / 1024 / 1024).toFixed(2);
-      this.logService.disk_warning(`当前硬盘剩余空间: ${availableGB} GB`);
+      // this.logService.disk_warning(`当前硬盘剩余空间: ${availableGB} GB`);
+      return availableGB;
     } else {
       this.logService.disk_warning('读取磁盘空间信息失败');
     }
@@ -258,7 +261,7 @@ async cleanOldFiles(): Promise<void> {
 
       if (stat.isFile()) {
         const mtime = stat.mtime.getTime();
-        if ((now - mtime) > 3 * 60 * 60 * 1000) { // 3 hours in milliseconds
+        if ((now - mtime) > 8 * 60 * 60 * 1000) { // 8 hours in milliseconds
           await new Promise((resolve, reject) => {
             fs.unlink(filePath, (err) => {
               // ignore error: file may be removed already
@@ -269,7 +272,12 @@ async cleanOldFiles(): Promise<void> {
       }
     }
 
-    this.logService.disk_warning(`清理ipa文件完成`);
+    let disk_space = await this.disk_warning();
+
+    this.logService.disk_warning(`清理ipa文件完成,剩余空间: ${disk_space} GB`);
+
+
+    
   } catch (error) {
     if(this.logService && this.logService.disk_warning) {
       this.logService.disk_warning(`清理文件出错: ${error.message || error}`);

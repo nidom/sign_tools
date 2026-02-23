@@ -21,11 +21,6 @@ export class SignController {
         private readonly tfMonitorService: TFMonitorService,
     ) { }
 
-    @Get('disk_warning')
-    async disk_warning(@Req() request: Request): Promise<any> {
-
-        return await this.signService.disk_warning();
-    }
 
     @Get('clean_old_files')
     async clean_old_files(@Req() request: Request): Promise<any> {
