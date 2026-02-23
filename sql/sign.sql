@@ -34,3 +34,15 @@ CREATE TABLE `agent_user` (
    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
 ) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COMMENT = '代理用户表';
+
+
+
+--udid卡设备记录
+DROP TABLE IF EXISTS `udid_stuck`;
+CREATE TABLE `udid_stuck` (   
+   
+   `id` int NOT NULL AUTO_INCREMENT primary key COMMENT '主键id',
+   `udid` varchar(100) NOT NULL COMMENT 'udid',
+   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COMMENT = '代理用户表';

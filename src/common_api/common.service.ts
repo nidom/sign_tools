@@ -73,13 +73,7 @@ export class CommonService {
     return await RedisService.share().get(key)
   }
 
-
-
-  
-
-
-
-   //删除所有表格
+  //删除所有表格
     async deleteAllTables(req: object, request: Request): Promise<any> {
 
     let tables = await this.dataSource.query(`SELECT table_name 

@@ -14,14 +14,11 @@ export class  AppIDEntity extends SharedEntity {
 
   @Column({ length: 50, comment: 'udid' })
   in_link: string;
-
-
+  
   @Column({ length: 50, comment: 'in_form' })
   in_form: string;
 
   @Column({ comment: 'kid' })
   in_kid: number;
-
-
 
 }

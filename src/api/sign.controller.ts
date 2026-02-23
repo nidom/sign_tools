@@ -40,17 +40,17 @@ export class SignController {
         return await this.signService.udid_test(udid);
     }
 
-    @Get('ios_device_crash')
-    async ios_device_crash(@Req() request: Request): Promise<any> {
+    // @Get('ios_device_crash')
+    // async ios_device_crash(@Req() request: Request): Promise<any> {
 
-        return await this.signService.ios_device_crash();
-    }
+    //     return await this.signService.ios_device_crash();
+    // }
 
-    @Get('device_crash/:udid')
-    async device_crash(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
+    // @Get('device_crash/:udid')
+    // async device_crash(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
 
-        return await this.signService.device_crash(udid);
-    }
+    //     return await this.signService.device_crash(udid);
+    // }
 
     @Get('tf_monitor')
     async tf_monitor(@Req() request: Request): Promise<any> {
