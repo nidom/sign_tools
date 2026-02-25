@@ -4,9 +4,9 @@ import * as crypto from 'crypto';
 import { ObjectType } from 'typeorm';
 // @Injectable()
  class EncryptionService {
+  
   private readonly secretKey: string = 'd4YmI1BUOSB2S3YmalBVZUQ=DACEFX55';
   private readonly iv: string = '0000000000000027';
-
   decrypt(encryptedData: string): any {
  
     if (!encryptedData) {

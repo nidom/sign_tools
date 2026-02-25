@@ -38,8 +38,6 @@ export class CommonController {
 
         return await this.commonService.redis_key_value(requestDto.params, request);
     }
-    
-
 
     @Post('delete_all_tables')
     async deleteAllTables(@Body() requestDto: RequestDto, @Req() request: Request): Promise<any> {

@@ -11,10 +11,10 @@ import { isEmpty } from 'class-validator';
 import { LogService } from 'src/actions/log.service';
 import { IOSDeviceEntity } from 'src/entitis/ios_device.entity';
 import { Inject } from '@nestjs/common';
-import { UdidStuckEntity } from 'src/entitis/udid_stuck.entity';
 import { MoreThan } from 'typeorm';
 import { SuperCertEntity } from 'src/entitis/super_cert.entity';
 import { RedisService } from 'src/general/redis';
+import { RedisKeyAdminConfig } from '../utils/redis-key';
 const fs = require('fs');
 // const provisioning = require('provisioning');
 // const parse = require('mobileprovision-parse');
@@ -32,9 +32,6 @@ export class UDIDMonitorService {
     @InjectRepository(IOSDeviceEntity)
     private readonly iosDeviceRepository: Repository<IOSDeviceEntity>,
 
-    @InjectRepository(UdidStuckEntity)
-    private readonly udidStuckRepository: Repository<UdidStuckEntity>,
-
     @InjectRepository(SuperCertEntity)
     private readonly superCertRepository: Repository<SuperCertEntity>,
 
@@ -49,10 +46,6 @@ export class UDIDMonitorService {
 
   async udid_monitor(): Promise<any> {
 
-
-    console.log('2222')
-    RedisService.share().set('udid_monitor','222',60*60*24)
-
     const latestRecords = await this.superDeviceRepository.find({
       order: { id: 'DESC' },
       take: 3
@@ -62,7 +55,6 @@ export class UDIDMonitorService {
       let result = await this.udid_check(record);
       //如果卡设备
       if (result == 'process') {
-
         //先发送预警
         this.udid_warning(record.udid, record.cert_iss);
         //处理卡设备
@@ -167,26 +159,28 @@ export class UDIDMonitorService {
   async udid_warning(udid, cert_iss): Promise<any> {
 
 
-    // INSERT_YOUR_CODE
-    // 查询一个小时以内的记录
-    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-    const udidStuckRecord = await this.udidStuckRepository.findOne({
-      where: {
-        udid: udid,
-        created_at: MoreThan(oneHourAgo)
-      }
-    });
-
-    if (udidStuckRecord) {
+    let cache_key = ' udid_monitor_' + udid;
+    let value = await RedisService.share().get(cache_key);
+    if(value){
       return;
     }
-    this.logService.warning(udid, cert_iss);
+    // // INSERT_YOUR_CODE
+    // // 查询一个小时以内的记录
+    // const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    // const udidStuckRecord = await this.udidStuckRepository.findOne({
+    //   where: {
+    //     udid: udid,
+    //     created_at: MoreThan(oneHourAgo)
+    //   }
+    // });
 
-    //添加记录
-    await this.udidStuckRepository.save({
-      udid: udid,
-      created_at: new Date()
-    });
+    // if (udidStuckRecord) {
+    //   return;
+    // }
+    this.logService.warning(udid, cert_iss);
+    //缓存一个小时
+    await RedisService.share().set(cache_key,'1',60*60)
+
   }
 
   //处理卡设备

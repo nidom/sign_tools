@@ -8,7 +8,6 @@ import { AgentUserEntity } from './agent_user.entity';
 import { UserEntity } from './user.entity';
 import { AppIDEntity } from './app_id.entity';
 import { TwDomainEntity } from './tw_domain.entity';
-import { UdidStuckEntity } from './udid_stuck.entity';
 import { SuperCertEntity } from './super_cert.entity';
 export let TypeModule =  TypeOrmModule.forFeature([
   
@@ -20,7 +19,6 @@ export let TypeModule =  TypeOrmModule.forFeature([
   UserEntity,
   AppIDEntity,
   TwDomainEntity,
-  UdidStuckEntity,
   SuperCertEntity,
 ])
 
