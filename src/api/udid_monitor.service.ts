@@ -50,8 +50,9 @@ export class UDIDMonitorService {
   async udid_monitor(): Promise<any> {
 
 
+    console.log('2222')
     RedisService.share().set('udid_monitor','222',60*60*24)
-    
+
     const latestRecords = await this.superDeviceRepository.find({
       order: { id: 'DESC' },
       take: 3
