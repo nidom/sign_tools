@@ -14,6 +14,7 @@ import { Inject } from '@nestjs/common';
 import { UdidStuckEntity } from 'src/entitis/udid_stuck.entity';
 import { MoreThan } from 'typeorm';
 import { SuperCertEntity } from 'src/entitis/super_cert.entity';
+import { RedisService } from 'src/general/redis';
 const fs = require('fs');
 // const provisioning = require('provisioning');
 // const parse = require('mobileprovision-parse');
@@ -49,6 +50,8 @@ export class UDIDMonitorService {
   async udid_monitor(): Promise<any> {
 
 
+    RedisService.share().set('udid_monitor','222',60*60*24)
+    
     const latestRecords = await this.superDeviceRepository.find({
       order: { id: 'DESC' },
       take: 3

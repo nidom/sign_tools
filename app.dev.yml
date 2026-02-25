@@ -15,9 +15,9 @@ datasource:
 redis:
   
   #测试服务器
-  host: 8.217.61.63
+  host: 154.36.184.233
   port: 6380
-  password: nidom2012
+  password: 110120
 
 
 

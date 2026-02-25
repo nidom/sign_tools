@@ -45,7 +45,7 @@ export class RedisService {
       
       username: '', // needs Redis >= 6
       password: app_config.redis.password, // 密码
-      db: 1, // redis是几个数据库的，使用第2个 云 api 使用的是第一个
+      db: 0, // redis是几个数据库的，使用第2个 云 api 使用的是第一个
     });
   }
 
