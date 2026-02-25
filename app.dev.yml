@@ -15,7 +15,7 @@ datasource:
 redis:
   
   #测试服务器
-  host: 154.36.184.233
+  host: 127.0.0.1
   port: 6380
   password: 110120
 
