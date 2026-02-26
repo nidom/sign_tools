@@ -17,8 +17,7 @@ import { FileManagerService } from './file.service';
         UtilsService,
         LogService,
         FileManagerService,
-     
-    ],
+     ],
     exports:[
 
         UtilsService,

@@ -9,7 +9,7 @@ export class FileManagerService {
 
 
 async decompressGzipFile(rowContent:Buffer, outputPath: string): Promise<any> {
-    
+
     const zlib = require('zlib');
     const fs = require('fs');
     const { promises: fsPromises } = fs;
@@ -23,6 +23,7 @@ async decompressGzipFile(rowContent:Buffer, outputPath: string): Promise<any> {
             message: 'File decompressed successfully',
             outputPath
         };
+
     } catch (error) {
         
         return {

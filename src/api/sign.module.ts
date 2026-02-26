@@ -15,7 +15,7 @@ import { TFMonitorService } from './tf_monitor.service';
     providers: [
         UDIDMonitorService,
         UrlRedirectService,
-        TFMonitorService
+        TFMonitorService,
     ],
 })
 export class SignModule { }

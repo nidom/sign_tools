@@ -29,38 +29,23 @@ export class LogService {
     
         // let bot = await this.botRepository.findOne({ where: { type: "message" } })
         this.logBot = BOT('7613591120:AAGMu6lt5TE4xkt7VOJf4bHUTI4dWEoV5zI')
-        
     }
    
-
     async warning(udid: string,cert_iss: string) {
 
-
-
         this.logBot.sendMessage(CHANNEL_ID_SIGN, udid+'卡设备,证书iss:'+cert_iss);
+    }
 
-
-        
-     }
-
-
-     async disk_warning(disk_space: string) {
-
-
+    async disk_warning(disk_space: string) {
 
         this.logBot.sendMessage(CHANNEL_ID_SIGN, disk_space);
     }
 
-
-     
     async tf_warning(url: string) {
 
         this.logBot.sendMessage(CHANNEL_ID_SIGN,'TF 链接访问异常:'+url);
-
     }
   
-        
-
     async error(udid: string) {
 
 

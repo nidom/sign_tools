@@ -8,20 +8,7 @@ import { Repository, Transaction } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isEmpty } from 'class-validator';
 
-import {
-    RedisKeyAliDiscount,
-    RedisKeyTXDiscount,
-    RedisKeyCloudUserEmail,
-    RedisKeyAgentRebateBalance,
-    RedisKeyAgentTotalRecharge,
-    RedisKeyAgentAliUserCount,
-    RedisKeyAgentLastCheckoutTime,
-    RedisKeyAgentLevel,
-    RedisKeyAgentRoleIDWithEmail,
-    RedisKeyGroupID_RoleID,
-    RedisKeyAWSDiscount,
-    RedisKeyAgentAWSUserCount
-} from 'src/utils/redis-key';
+
 
 import { RedisService } from 'src/general/redis';
 import { promisifiedFunction } from 'src/utils/promis';
@@ -41,8 +28,6 @@ export class UtilsService {
 
     ) { }
 
-
-
     //限制
     async limit(key, second): Promise<boolean> {
 
@@ -59,10 +44,7 @@ export class UtilsService {
         await RedisService.share().set(redisKey, Date.now().toString(), second); // Expire in 2 seconds
         return false;
     }
-
-
-
-     //一天内限制多少次访问
+    //一天内限制多少次访问
     async limitDayliy(key,times): Promise<boolean> {
 
         const currentDate = new Date();
