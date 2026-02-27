@@ -11,12 +11,12 @@ export class LinkController {
     constructor(
         private readonly linkService: LinkService,
     ) { }
-    @Get('link/:app_id')
+    @Get('*')
     async appLink(@Param('app_id') app_id: string): Promise<any> {
         return await this.linkService.app_link(app_id);
     }
 
-    @Post('link/:app_id')
+    @Post('*')
     async appLinkPost(@Param('app_id') app_id: string): Promise<any> {
         return await this.linkService.app_link(app_id);
     }

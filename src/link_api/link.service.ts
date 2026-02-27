@@ -8,12 +8,14 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isEmpty } from 'class-validator';
 import { CResult } from 'src/utils';
-@Injectable()
+import { RedisService } from 'src/general/redis';
 export class LinkService {
 
     constructor(
         @InjectRepository(SignConfigEntity)
         private readonly signConfigRepository: Repository<SignConfigEntity>,
+
+        
     ) { }
 
     async app_link(app_id: string): Promise<any> {
@@ -21,26 +23,22 @@ export class LinkService {
         // const result = await client.get('link.json');
         // return result;
 
-
+        
         if(isEmpty(app_id)){
 
-            return new CResult(-1, 'app_id不能为空', {});
+            return new CResult(-1, 'url error', {});
         }
         
-       let record = await this.signConfigRepository.findOne({ where: { name: 'IN_SJDOMAIN' } });
-       let domain = record.value;
 
-       return new CResult(0, '', { 'domain': domain });
+        let xz_domain_key = 'xz_domain_key';
+        let xz_domain = await RedisService.share().get(xz_domain_key);
+        if(isEmpty(xz_domain)){
 
+            return new CResult(-1, 'domain error', {});
+        }
 
-
-    //    if (!domain.startsWith('*.')) {
-    //       return
-    //     }
-
-
-            // Check if the price entity exists for the given c_code
-       
+        return new CResult(0, '', xz_domain+'/'+app_id);
+    
     
     }
 
