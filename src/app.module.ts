@@ -1,4 +1,4 @@
-import { Url_linkService } from './api/url_link.service';
+import { UrlLinkService } from './api/url_link.service';
 import { LinkModule } from './link_api/link.module';
 import { LinkService } from './link_api/link.service';
 import { DomainModule } from './domain_api/domain.module';
