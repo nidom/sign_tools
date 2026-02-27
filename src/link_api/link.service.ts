@@ -3,7 +3,6 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
-import { ClientService } from '../actions/client.service';
 import { SignConfigEntity } from '../entitis/sign_config.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +12,6 @@ import { CResult } from 'src/utils';
 export class LinkService {
 
     constructor(
-        private readonly clientService: ClientService,
         @InjectRepository(SignConfigEntity)
         private readonly signConfigRepository: Repository<SignConfigEntity>,
     ) { }

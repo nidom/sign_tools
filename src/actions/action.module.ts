@@ -8,7 +8,6 @@ import { StartService } from './start.service';
 import { UtilsService } from './utils.service';
 import { LogService } from './log.service';
 import { FileManagerService } from './file.service';
-import { ClientService } from './client.service';
 @Module({
     imports: [TypeModule],
     controllers: [],
@@ -18,7 +17,6 @@ import { ClientService } from './client.service';
         UtilsService,
         LogService,
         FileManagerService,
-        ClientService,
      ],
     exports:[
 

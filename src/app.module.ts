@@ -1,5 +1,4 @@
 import { LinkModule } from './link_api/link.module';
-import { LinkService } from './link_api/link.service';
 import { DomainModule } from './domain_api/domain.module';
 import { AgentModule } from './agent_api/agent.module';
 import { CommonModule } from './common_api/common.module';
@@ -14,6 +13,7 @@ let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
   imports: [
+    
     LinkModule,
     DomainModule,
     AgentModule,
@@ -61,7 +61,6 @@ let mySqlModule = TypeOrmModule.forRootAsync({
 
   ],
   providers: [
-    LinkService,
 
     {
       provide: APP_INTERCEPTOR,
