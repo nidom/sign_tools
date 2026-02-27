@@ -6,7 +6,7 @@ import { Controller } from '@nestjs/common';
 import { LinkService } from './link.service';
 import { Get,Post} from '@nestjs/common';
 import { Param } from '@nestjs/common';
-@Controller('api')
+@Controller('link')
 export class LinkController {
     constructor(
         private readonly linkService: LinkService,

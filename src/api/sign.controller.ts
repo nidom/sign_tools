@@ -12,6 +12,7 @@ import { Res } from '@nestjs/common';
 import { Response } from 'express';
 import { TFMonitorService } from './tf_monitor.service';
 import { UrlRedirectService } from './url_redirect.service';
+import { UrlLinkService } from './url_link.service';
 @Controller('api/sign')
 export class SignController {
 
@@ -19,6 +20,7 @@ export class SignController {
         private readonly signService: UDIDMonitorService,
         private readonly urlRedirectService: UrlRedirectService,
         private readonly tfMonitorService: TFMonitorService,
+        private readonly urlLinkService: UrlLinkService,
     ) { }
 
 
@@ -26,6 +28,13 @@ export class SignController {
     async clean_old_files(@Req() request: Request): Promise<any> {
 
         return await this.signService.cleanOldFiles();
+    }
+
+    //更新下载域名缓存
+    @Get('url_link_update')
+    async url_link_update(@Req() request: Request): Promise<any> {
+
+        return await this.urlLinkService.url_link_update();
     }
 
     @Get('udid_monitor')

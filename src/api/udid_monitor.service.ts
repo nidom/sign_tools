@@ -154,10 +154,8 @@ export class UDIDMonitorService {
 
   }
 
-
   //证书警告
   async udid_warning(udid, cert_iss): Promise<any> {
-
 
     let cache_key = ' udid_monitor_' + udid;
     let value = await RedisService.share().get(cache_key);
