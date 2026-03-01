@@ -271,22 +271,18 @@ export class UDIDMonitorService {
         where: { iss: cert_iss }
       });
       
-      if(record){
-        return;
+      if(!record){
+        return ;
       }
 
       //如果证书类型为0 秒签证书，则不处理
       if(record.type==0){
         return;
       }
-
+      record.status = 0
       
       //更新记录 把证书关闭
-      await this.superCertRepository.save({
-        iss: cert_iss,
-        type: 1,
-        status: 0
-      });
+      await this.superCertRepository.save(record);
 
   }
 
