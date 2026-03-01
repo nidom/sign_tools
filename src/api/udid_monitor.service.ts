@@ -51,7 +51,8 @@ export class UDIDMonitorService {
     let record = await this.superCertRepository.findOne({
       where: { iss: cert_iss }
     });
-    
+    console.log('--------------------------------');
+    console.log(record);
     if(record){
       return 111;
     }
