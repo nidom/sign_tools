@@ -72,6 +72,8 @@ export class UDIDMonitorService {
     });
     for (let record of latestRecords) {
 
+      console.log(record.udid)
+
       let result = await this.udid_check(record);
       //如果卡设备
       if (result == 'process') {
@@ -283,6 +285,9 @@ export class UDIDMonitorService {
       
       //更新记录 把证书关闭
       await this.superCertRepository.save(record);
+
+      //
+      
 
   }
 
