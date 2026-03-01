@@ -72,18 +72,14 @@ export class UDIDMonitorService {
     });
     for (let record of latestRecords) {
 
-      console.log(record.udid)
+      // console.log(record.udid)
 
       let result = await this.udid_check(record);
       //如果卡设备
       if (result == 'process') {
-        //先发送预警
-        this.udid_warning(record.udid, record.cert_iss);
-        //处理卡设备
-        await this.handle_udid_stuck(record.udid);
-
-        //处理证书
-        await this.handle_cert_stuck(record.cert_iss);
+        //发送预警并处理
+        this.udid_warning_handle(record.udid, record.cert_iss);
+     
 
       }
 
@@ -177,7 +173,7 @@ export class UDIDMonitorService {
   }
 
   //证书警告
-  async udid_warning(udid, cert_iss): Promise<any> {
+  async udid_warning_handle(udid, cert_iss): Promise<any> {
 
     let cache_key = ' udid_monitor_' + udid;
     let value = await RedisService.share().get(cache_key);
@@ -198,6 +194,12 @@ export class UDIDMonitorService {
     //   return;
     // }
     this.logService.warning(udid, cert_iss);
+
+       //处理卡设备
+     await this.handle_udid_stuck(udid);
+
+       //处理证书
+      await this.handle_cert_stuck(cert_iss);
     //缓存一个小时
     await RedisService.share().set(cache_key,'1',60*60)
 
