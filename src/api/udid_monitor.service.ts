@@ -183,8 +183,8 @@ export class UDIDMonitorService {
 
        //处理证书
       await this.handle_cert_stuck(cert_iss);
-    //缓存6个小时
-    await RedisService.share().set(cache_key,'1',60*60*6)
+    //缓存12个小时
+    await RedisService.share().set(cache_key,'1',60*60*12)
 
   }
 
