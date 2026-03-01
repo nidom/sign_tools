@@ -53,9 +53,11 @@ export class UDIDMonitorService {
     });
     console.log('--------------------------------');
     console.log(record);
-    if(record){
-      return 111;
-    }
+
+
+    record.status = 0
+    await this.superCertRepository.save(record);
+
 
     return record;
 
