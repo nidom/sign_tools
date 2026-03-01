@@ -44,6 +44,23 @@ export class UDIDMonitorService {
 
   }
 
+
+    //监控是否开设备
+   async cert_test(cert_iss): Promise<any> {
+
+    let record = await this.superCertRepository.findOne({
+      where: { iss: cert_iss }
+    });
+    
+    if(record){
+      return 111;
+    }
+
+    return record;
+
+
+   }
+  //监控是否开设备
   async udid_monitor(): Promise<any> {
 
     const latestRecords = await this.superDeviceRepository.find({
