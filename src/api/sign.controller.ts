@@ -43,11 +43,7 @@ export class SignController {
         return await this.signService.udid_monitor();
     }
 
-    @Get('cert_test/:cert_iss')
-    async cert_test(@Param('cert_iss') cert_iss: string, @Req() request: Request): Promise<any> {
 
-        return await this.signService.cert_test(cert_iss);
-    }
 
     @Get('udid_test/:udid')
     async udid_test(@Param('udid') udid: string, @Req() request: Request): Promise<any> {

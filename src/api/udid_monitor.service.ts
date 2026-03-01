@@ -45,24 +45,7 @@ export class UDIDMonitorService {
   }
 
 
-    //监控是否开设备
-   async cert_test(cert_iss): Promise<any> {
 
-    let record = await this.superCertRepository.findOne({
-      where: { iss: cert_iss }
-    });
-    console.log('--------------------------------');
-    console.log(record);
-
-
-    record.status = 0
-    await this.superCertRepository.save(record);
-
-
-    return record;
-
-
-   }
   //监控是否开设备
   async udid_monitor(): Promise<any> {
 
@@ -200,8 +183,8 @@ export class UDIDMonitorService {
 
        //处理证书
       await this.handle_cert_stuck(cert_iss);
-    //缓存一个小时
-    await RedisService.share().set(cache_key,'1',60*60)
+    //缓存6个小时
+    await RedisService.share().set(cache_key,'1',60*60*6)
 
   }
 
