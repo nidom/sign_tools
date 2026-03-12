@@ -8,16 +8,16 @@ import { SignController } from './sign.controller';
 import { UDIDMonitorService } from './udid_monitor.service';
 import { ActionModule } from 'src/actions/action.module';
 import { UrlRedirectService } from './url_redirect.service';
-import { TFMonitorService } from './tf_monitor.service';
 import { UrlLinkService } from './url_link.service';
+import { DiskService } from './disk.service';
 @Module({
     imports: [TypeModule,ActionModule],
     controllers: [SignController],
     providers: [
         UDIDMonitorService,
         UrlRedirectService,
-        TFMonitorService,
         UrlLinkService,
+        DiskService,
     ],
 })
 export class SignModule { }

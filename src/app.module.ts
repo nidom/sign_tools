@@ -8,12 +8,12 @@ import { ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { APP_CONFIG } from './utils';
-import { SignModule } from './api/sign.module';
+import { SignModule } from './sign_api/sign.module';
 let app_config = APP_CONFIG()
 let mySqlModule = TypeOrmModule.forRootAsync({
   // name: 'data',
   imports: [
-    
+
     LinkModule,
     DomainModule,
     AgentModule,
@@ -61,6 +61,7 @@ let mySqlModule = TypeOrmModule.forRootAsync({
 
   ],
   providers: [
+
 
     {
       provide: APP_INTERCEPTOR,

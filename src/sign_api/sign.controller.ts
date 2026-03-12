@@ -10,24 +10,25 @@ import { Post, Get, Param } from '@nestjs/common';
 import { Request } from '@nestjs/common';
 import { Res } from '@nestjs/common';
 import { Response } from 'express';
-import { TFMonitorService } from './tf_monitor.service';
 import { UrlRedirectService } from './url_redirect.service';
 import { UrlLinkService } from './url_link.service';
+import { DiskService } from './disk.service';
 @Controller('api/sign')
 export class SignController {
 
     constructor(
         private readonly signService: UDIDMonitorService,
         private readonly urlRedirectService: UrlRedirectService,
-        private readonly tfMonitorService: TFMonitorService,
         private readonly urlLinkService: UrlLinkService,
+        private readonly diskService: DiskService,
     ) { }
 
 
+    //删除超级缓存的旧文件
     @Get('clean_old_files')
     async clean_old_files(@Req() request: Request): Promise<any> {
 
-        return await this.signService.cleanOldFiles();
+        return await this.diskService.cleanOldFiles();
     }
 
     //更新下载域名缓存
@@ -37,14 +38,14 @@ export class SignController {
         return await this.urlLinkService.url_link_update();
     }
 
+    //监控有没有卡设备
     @Get('udid_monitor')
     async udid_monitor(@Req() request: Request): Promise<any> {
 
         return await this.signService.udid_monitor();
     }
 
-
-
+    
     @Get('udid_test/:udid')
     async udid_test(@Param('udid') udid: string, @Req() request: Request): Promise<any> {
 
@@ -63,11 +64,7 @@ export class SignController {
     //     return await this.signService.device_crash(udid);
     // }
 
-    @Get('tf_monitor')
-    async tf_monitor(@Req() request: Request): Promise<any> {
 
-        return await this.tfMonitorService.monitor();
-    }
     //154.36.158.161/api/sign/redirect/123456/s
     @Get('redirect/:params')
     async redirect(@Param('params') params: string, @Req() request: Request, @Res() res: Response): Promise<any> {

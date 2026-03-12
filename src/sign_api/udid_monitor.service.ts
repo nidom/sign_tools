@@ -15,6 +15,7 @@ import { MoreThan } from 'typeorm';
 import { SuperCertEntity } from 'src/entitis/super_cert.entity';
 import { RedisService } from 'src/general/redis';
 import { RedisKeyAdminConfig } from '../utils/redis-key';
+import { SuperSignEntity } from 'src/entitis/super_sign.entity';
 const fs = require('fs');
 // const provisioning = require('provisioning');
 // const parse = require('mobileprovision-parse');
@@ -35,6 +36,10 @@ export class UDIDMonitorService {
     @InjectRepository(SuperCertEntity)
     private readonly superCertRepository: Repository<SuperCertEntity>,
 
+    //签名队列
+    @InjectRepository(SuperSignEntity)
+    private readonly superSignRepository: Repository<SuperSignEntity>,
+
     @Inject(LogService)
     private readonly logService: LogService,
     // private  udids = []
@@ -44,11 +49,11 @@ export class UDIDMonitorService {
 
   }
 
-
-
   //监控是否开设备
   async udid_monitor(): Promise<any> {
 
+
+    //先监控签名设备
     const latestRecords = await this.superDeviceRepository.find({
       order: { id: 'DESC' },
       take: 3
@@ -62,16 +67,31 @@ export class UDIDMonitorService {
       if (result == 'process') {
         //发送预警并处理
         this.udid_warning_handle(record.udid, record.cert_iss);
-     
 
       }
 
     }
 
-    // const latestRecords = await this.superUDIDRepository.find({
 
-    //     order: { id: 'DESC' }
-    // });
+
+
+    //监控签名队列
+    const latestSignRecords = await this.superSignRepository.find({
+      order: { id: 'DESC' },
+      take: 100
+    });
+
+
+
+    for (let record of latestSignRecords) {
+
+      // console.log(record.udid)
+
+       await this.sign_udid_check(record);
+
+      }
+
+
 
   }
 
@@ -155,12 +175,48 @@ export class UDIDMonitorService {
 
   }
 
+
+
+  //签名队列检查
+  async sign_udid_check(record: SuperSignEntity): Promise<any> {
+
+    //如果udid是空 则不处理
+    if (isEmpty(record.udid)) {
+      return;
+    }
+
+    //卡了 把所有预定证书关闭 并预警
+    if (record.type == 0 && record.status == 0 && isEmpty(record.cert_iss)) {
+
+      let cache_key = ' udid_sign_monitor_' + record.udid;
+      let value = await RedisService.share().get(cache_key);
+      if (value) {
+        return;
+      }
+      let certs = await this.superCertRepository.find({
+        where: { status: 1 }
+      });
+
+      // INSERT_YOUR_CODE
+      // 把certs的status都设置为0
+      for (let cert of certs) {
+        cert.status = 0;
+        await this.superCertRepository.save(cert);
+      }
+
+      this.udid_warning_handle(record.udid, '所有预定证书已关闭');
+      await RedisService.share().set(cache_key, '1', 60 * 60 * 12)
+
+    }
+  }
+
+
   //证书警告
   async udid_warning_handle(udid, cert_iss): Promise<any> {
 
     let cache_key = ' udid_monitor_' + udid;
     let value = await RedisService.share().get(cache_key);
-    if(value){
+    if (value) {
       return;
     }
     // // INSERT_YOUR_CODE
@@ -178,13 +234,13 @@ export class UDIDMonitorService {
     // }
     this.logService.warning(udid, cert_iss);
 
-       //处理卡设备
-     await this.handle_udid_stuck(udid);
+    //处理卡设备
+    await this.handle_udid_stuck(udid);
 
-       //处理证书
-      await this.handle_cert_stuck(cert_iss);
+    //处理证书
+    await this.handle_cert_stuck(cert_iss);
     //缓存12个小时
-    await RedisService.share().set(cache_key,'1',60*60*12)
+    await RedisService.share().set(cache_key, '1', 60 * 60 * 12)
 
   }
 
@@ -230,123 +286,55 @@ export class UDIDMonitorService {
 
   // }
 
-   //先处理 udid
+  //先处理 udid
   async handle_udid_stuck(udid: string): Promise<any> {
 
-    
+
     let records = await this.iosDeviceRepository.find({
       where: { udid: udid }
     });
 
     for (let record of records) {
-        //卡设备了 
+      //卡设备了 
 
-        if (!record.udid.endsWith('-k')) {
-          record.udid = record.udid + '-k'
-          await this.iosDeviceRepository.save(record);
-        }
-        // this.udid_warning(record.udid,record.cert_iss);
+      if (!record.udid.endsWith('-k')) {
+        record.udid = record.udid + '-k'
+        await this.iosDeviceRepository.save(record);
       }
-
-  }
-
-     //处理 cert
-     async handle_cert_stuck(cert_iss: string): Promise<any> {
-
-    
-      let record = await this.superCertRepository.findOne({
-        where: { iss: cert_iss }
-      });
-      
-      if(!record){
-        return ;
-      }
-
-      //如果证书类型为0 秒签证书，则不处理
-      if(record.type==0){
-        return;
-      }
-      record.status = 0
-      
-      //更新记录 把证书关闭
-      await this.superCertRepository.save(record);
-
-      //
-      
-
-  }
-
-
-
-  //读取服务器磁盘空间
-  async disk_warning(): Promise<any> {
-
-    const { execSync } = require('child_process');
-    try {
-      const stdout = execSync('df -k /', { encoding: 'utf8' });
-      const lines = stdout.trim().split('\n');
-      if (lines.length >= 2) {
-        // Linux/macOS format: Filesystem 1024-blocks Used Available Capacity Mounted on
-        const parts = lines[1].split(/\s+/);
-        // "Available" is usually the 4th column (index 3)
-        const availableKB = parseInt(parts[3], 10);
-        const availableGB = (availableKB / 1024 / 1024).toFixed(2);
-        // this.logService.disk_warning(`当前硬盘剩余空间: ${availableGB} GB`);
-        return availableGB;
-      } else {
-        this.logService.disk_warning('读取磁盘空间信息失败');
-      }
-    } catch (error) {
-      this.logService.disk_warning(`Error checking disk space: ${error.message}`);
+      // this.udid_warning(record.udid,record.cert_iss);
     }
 
   }
 
-  // INSERT_YOUR_CODE
-  async cleanOldFiles(): Promise<void> {
+  //处理 cert
+  async handle_cert_stuck(cert_iss: string): Promise<any> {
 
-    let dirPath = '/www/wwwroot/iosxapp.com/data/uploads/super_sign_ipa'
-    const fs = require('fs');
-    const path = require('path');
-    try {
-      const files: string[] = await new Promise((resolve, reject) => {
-        fs.readdir(dirPath, (err, files) => {
-          if (err) reject(err);
-          else resolve(files);
-        });
-      });
 
-      const now = Date.now();
-      for (let file of files) {
-        const filePath = path.join(dirPath, file);
-        const stat: any = await new Promise((resolve, reject) => {
-          fs.stat(filePath, (err, stat) => {
-            if (err) reject(err);
-            else resolve(stat);
-          });
-        });
+    let record = await this.superCertRepository.findOne({
+      where: { iss: cert_iss }
+    });
 
-        if (stat.isFile()) {
-          const mtime = stat.mtime.getTime();
-          if ((now - mtime) > 8 * 60 * 60 * 1000) { // 8 hours in milliseconds
-            await new Promise((resolve, reject) => {
-              fs.unlink(filePath, (err) => {
-                // ignore error: file may be removed already
-                resolve(undefined);
-              });
-            });
-          }
-        }
-      }
-
-      let disk_space = await this.disk_warning();
-      this.logService.disk_warning(`清理ipa文件完成,剩余空间: ${disk_space} GB`);
-
-    } catch (error) {
-      if (this.logService && this.logService.disk_warning) {
-        this.logService.disk_warning(`清理文件出错: ${error.message || error}`);
-      }
+    if (!record) {
+      return;
     }
+
+    //如果证书类型为0 秒签证书，则不处理
+    if (record.type == 0) {
+      return;
+    }
+
+    record.status = 0
+
+    //更新记录 把证书关闭
+    await this.superCertRepository.save(record);
+
+    //
+
+
   }
+
+
+
+
 
 }

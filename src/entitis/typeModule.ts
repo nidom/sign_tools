@@ -9,6 +9,7 @@ import { UserEntity } from './user.entity';
 import { AppIDEntity } from './app_id.entity';
 import { TwDomainEntity } from './tw_domain.entity';
 import { SuperCertEntity } from './super_cert.entity';
+import { SuperSignEntity } from './super_sign.entity';
 export let TypeModule =  TypeOrmModule.forFeature([
   
   SuperDeviceEntity,
@@ -20,5 +21,6 @@ export let TypeModule =  TypeOrmModule.forFeature([
   AppIDEntity,
   TwDomainEntity,
   SuperCertEntity,
+  SuperSignEntity,
 ])
 
