@@ -185,10 +185,10 @@ export class UDIDMonitorService {
 
     //卡了 把所有预定证书关闭 并预警
     if (record.type == 0 && record.status == 0 && isEmpty(record.cert_iss)) {
-      
+
       console.log('所有预定证书已关闭');
 
-      let cache_key = ' udid_sign_monitor_' + record.udid;
+      let cache_key = 'udid_sign_monitor_' + record.udid;
       let value = await RedisService.share().get(cache_key);
       if (value) {
         return;
