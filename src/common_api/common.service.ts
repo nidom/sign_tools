@@ -11,7 +11,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BOT } from '../general/bot';
 import { LogService } from 'src/actions/log.service';
-import { UtilsService } from 'src/actions/utils.service';
 import { promisifiedFunction } from '../utils/promis';
 import { APP_CONFIG } from 'src/utils';
 import { DataSource } from 'typeorm';
@@ -32,7 +31,6 @@ export class CommonService {
   constructor(
   
     private readonly logService: LogService,
-    private readonly utilService: UtilsService,
     private readonly dataSource: DataSource,
 
   ) { }

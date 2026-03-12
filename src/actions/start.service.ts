@@ -18,16 +18,9 @@ export class StartService implements OnApplicationBootstrap {
    //应用启动后执行
   async onApplicationBootstrap() {
 
-    await this.loadRoleInfoToRedis()
     console.log('数据缓存加载成功')
   }
   
-  async loadRoleInfoToRedis(){ 
-    
-    // Get all agent roles from the database
-    // const agentRoles = await this.agentRoleRepository.find();
-    // Loop through each agent role
 
-  }
 
 }

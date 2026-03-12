@@ -20,20 +20,17 @@
     "pm2:logs": "pm2 logs"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.806.0",
-    "@aws-sdk/client-sso-admin": "^3.758.0",
+
     "@nestjs/axios": "^3.0.3",
     "@nestjs/config": "^3.1.1",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
     "@parse/node-apn": "^6.0.1",
     "@stendahls/provision-parse": "^1.0.1",
-    "ali-oss": "^6.21.0",
     "axios": "^1.7.9",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "crypto-js": "^4.2.0",
-    "csv-parser": "^3.0.0",
     "dns2": "^2.1.0",
     "dohjs": "^0.3.3",
     "https-proxy-agent": "^7.0.6",
