@@ -78,7 +78,7 @@ export class UDIDMonitorService {
     //监控签名队列
     const latestSignRecords = await this.superSignRepository.find({
       order: { id: 'DESC' },
-      take: 100
+      take: 30
     });
 
 
@@ -194,7 +194,8 @@ export class UDIDMonitorService {
         return;
       }
       let certs = await this.superCertRepository.find({
-        where: { status: 1 }
+
+        where: { status: 1, type: 1 }
       });
 
       // INSERT_YOUR_CODE
