@@ -205,8 +205,7 @@ export class UDIDMonitorService {
         cert.status = 0;
         await this.superCertRepository.save(cert);
       }
-
-      this.udid_warning_handle(record.udid, '所有预定证书已关闭');
+      this.logService.warning(record.udid, '所有预定证书已关闭');
       await RedisService.share().set(cache_key, '1', 60 * 60 * 12)
 
     }
