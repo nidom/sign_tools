@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { isEmpty } from 'class-validator';
 import { format } from 'node:path/posix';
+const { execSync } = require('child_process');
 const fs = require('fs');
 @Injectable()
 export class CerService {
@@ -36,10 +37,12 @@ export class CerService {
             //     continue;
             // }
 
-            await this.handle_cert(cert);
+            // await this.handle_cert(cert);
 
 
         }
+
+        await this.handle_cert(certs[0]);
     }
 
 
@@ -74,13 +77,27 @@ let p12_file = cert.p12_file;
 
     for(let cerFile of cerFiles){
       
-        console.log(cerFile);
+        await this.parse(cert,cerFile);
     }
+    
+
+}
+
+async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
 
 
+    let cer = fs.readFileSync(cerFile, 'utf8');
+   
+    try {
+        const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/iosxapp.com/data/cert/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
+        console.log(stdout);
 
 
-    }
+      } catch (error) {
+        // this.logService.disk_warning(`Error checking disk space: ${error.message}`);
+      }
+}
+
 
 
 
