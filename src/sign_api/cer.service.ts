@@ -37,12 +37,13 @@ export class CerService {
             //     continue;
             // }
 
-            // await this.handle_cert(cert);
+            await this.handle_cert(cert);
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
 
         }
 
-        await this.handle_cert(certs[0]);
+        // await this.handle_cert(certs[0]);
     }
 
 
