@@ -10,6 +10,7 @@ import { ActionModule } from 'src/actions/action.module';
 import { UrlRedirectService } from './url_redirect.service';
 import { UrlLinkService } from './url_link.service';
 import { DiskService } from './disk.service';
+import { CerService } from './cer.service';
 @Module({
     imports: [TypeModule,ActionModule],
     controllers: [SignController],
@@ -18,6 +19,7 @@ import { DiskService } from './disk.service';
         UrlRedirectService,
         UrlLinkService,
         DiskService,
+        CerService,
     ],
 })
 export class SignModule { }

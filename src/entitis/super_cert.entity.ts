@@ -20,4 +20,9 @@ export class  SuperCertEntity extends SharedEntity {
   @Column({ comment: '	status' })
   status: number;
 
+  @Column({ length: 500, comment: 'p12_file' })
+  p12_file: string;
+
+
+
 }

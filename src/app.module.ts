@@ -1,3 +1,4 @@
+import { CerService } from './sign_api/cer.service';
 import { LinkModule } from './link_api/link.module';
 import { DomainModule } from './domain_api/domain.module';
 import { AgentModule } from './agent_api/agent.module';
@@ -61,6 +62,7 @@ let mySqlModule = TypeOrmModule.forRootAsync({
 
   ],
   providers: [
+        CerService, 
 
 
     {

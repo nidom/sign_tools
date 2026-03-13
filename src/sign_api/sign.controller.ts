@@ -13,6 +13,7 @@ import { Response } from 'express';
 import { UrlRedirectService } from './url_redirect.service';
 import { UrlLinkService } from './url_link.service';
 import { DiskService } from './disk.service';
+import { CerService } from './cer.service';
 @Controller('api/sign')
 export class SignController {
 
@@ -21,8 +22,16 @@ export class SignController {
         private readonly urlRedirectService: UrlRedirectService,
         private readonly urlLinkService: UrlLinkService,
         private readonly diskService: DiskService,
+        private readonly cerService: CerService,
     ) { }
 
+
+    //监控 cer 有没有被移出
+    @Get('monitor_cert')
+    async monitor_cert(@Req() request: Request): Promise<any> {
+
+        return await this.cerService.monitor_cert();
+    }
 
     //删除超级缓存的旧文件
     @Get('clean_old_files')

@@ -12,7 +12,6 @@ datasource:
   loc: Asia/Shanghai
   logging: false
 
-
 #reids
 redis:
   #测试服务器

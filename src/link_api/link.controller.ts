@@ -20,11 +20,4 @@ export class LinkController {
     async appLinkPost(@Param('app_id') app_id: string): Promise<any> {
         return await this.linkService.app_link(app_id);
     }
-
-
-
-
-
-
-
 }
