@@ -44,7 +44,7 @@ export class CerService {
     async handle_cert(cert: SuperCertEntity): Promise<any> {
 
    
-        let p12_file = cert.p12_file;
+let p12_file = cert.p12_file;
     // INSERT_YOUR_CODE
     // 把p12_file 使用/分割 获取第一个字符串
      let firstPart = '';
@@ -52,6 +52,8 @@ export class CerService {
         const parts = p12_file.split('/');
         firstPart = parts[0];
      }
+
+     console.log(firstPart);
      let dircetory = `/www/wwwroot/iosxapp.com/data/cert/${firstPart}`;
 
     // INSERT_YOUR_CODE
