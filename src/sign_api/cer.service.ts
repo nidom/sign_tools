@@ -83,17 +83,19 @@ let p12_file = cert.p12_file;
       
          let result = await this.parse(cerFile);
 
-         if(result == 0){
+         if(result === 0){
 
             //设置为失效
             cert.status = 2;
             await this.superCertRepository.save(cert);
+
+            let key = 'cert_status_monitor_'+cert.iss;
             this.logService.warning_message(cert.iss+'已经被移出或封号，自动设置为失效');
 
          }
 
          //监控异常 直接退出
-         if(result == -1){
+         if(result === -1){
             this.logService.warning_message('证书状态监控异常，请检查');
             return
 
@@ -140,6 +142,7 @@ async parse(cerFile: string): Promise<any> {
 
         if(stdout.includes('revoked')){
 
+            console.log('revoked');
             return 0
         }
 
