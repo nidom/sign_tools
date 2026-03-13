@@ -111,11 +111,25 @@ async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
         } else {
             stdout = result.stdout;
         }
+
+        if(stdout.includes('good')){
+
+            console.log('good');
+            return 1
+        }
+
+        if(stdout.includes('revoked')){
+            console.log('revoked');
+
+            return 0
+        }
+
+        console.log('unknown');
+
+        return -1
         // console.log(stdout);
-        const lines = stdout.trim().split('\n');
 
       // INSERT_YOUR_CODE
-      console.log(lines);
 
 
 
