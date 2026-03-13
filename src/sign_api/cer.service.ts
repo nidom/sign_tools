@@ -25,6 +25,8 @@ export class CerService {
     async monitor_cert(): Promise<any> {
 
         let certs =  await this.superCertRepository.find();
+
+        console.log(certs);
         for(let cert of certs){
 
             if(isEmpty(cert.p12_file)){
