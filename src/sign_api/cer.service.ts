@@ -89,7 +89,7 @@ async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
     let cer = fs.readFileSync(cerFile, 'utf8');
    
     try {
-        const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/iosxapp.com/data/cert/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
+        const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
         console.log(stdout);
 
 
