@@ -96,7 +96,7 @@ export class CerService {
                 cert.status = 2;
                 await this.superCertRepository.save(cert);
 
-                this.logService.warning_message(cert.iss + '已经被移出或封号，自动设置为失效');
+                this.logService.warning_message(cert.iss + '已经被移除，自动设置为失效');
 
             }
 
