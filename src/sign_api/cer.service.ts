@@ -32,9 +32,9 @@ export class CerService {
             if(isEmpty(cert.p12_file)){
                 continue;
             }
-            if(!fs.existsSync(cert.p12_file)){
-                continue;
-            }
+            // if(!fs.existsSync(cert.p12_file)){
+            //     continue;
+            // }
 
             await this.handle_cert(cert);
 
