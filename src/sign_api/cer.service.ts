@@ -26,7 +26,7 @@ export class CerService {
 
         let certs =  await this.superCertRepository.find();
 
-        console.log(certs);
+        // console.log(certs);
         for(let cert of certs){
 
             if(isEmpty(cert.p12_file)){
