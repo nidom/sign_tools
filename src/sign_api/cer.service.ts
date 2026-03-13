@@ -10,6 +10,7 @@ import { isEmpty } from 'class-validator';
 import { format } from 'node:path/posix';
 const { execSync } = require('child_process');
 const fs = require('fs');
+import { LogService } from 'src/actions/log.service';
 @Injectable()
 export class CerService {
 
@@ -17,6 +18,8 @@ export class CerService {
     constructor(
         @InjectRepository(SuperCertEntity)
         private readonly superCertRepository: Repository<SuperCertEntity>,
+
+        private readonly logService: LogService,
     ) {
     }
 
@@ -78,13 +81,30 @@ let p12_file = cert.p12_file;
 
     for(let cerFile of cerFiles){
       
-        await this.parse(cert,cerFile);
+         let result = await this.parse(cerFile);
+
+         if(result == 0){
+
+            //设置为失效
+            cert.status = 2;
+            await this.superCertRepository.save(cert);
+            this.logService.warning_message(cert.iss+'已经被移出或封号，自动设置为失效');
+
+         }
+
+         //监控异常 直接退出
+         if(result == -1){
+            this.logService.warning_message('证书状态监控异常，请检查');
+            return
+
+         }
+    
     }
     
 
 }
 
-async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
+async parse(cerFile: string): Promise<any> {
 
 
    
@@ -115,17 +135,14 @@ async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
 
         if(stdout.includes('good')){
 
-            console.log('good');
             return 1
         }
 
         if(stdout.includes('revoked')){
-            console.log('revoked');
 
             return 0
         }
 
-        console.log('unknown');
 
         return -1
         // console.log(stdout);
@@ -135,8 +152,8 @@ async parse(cert: SuperCertEntity,cerFile: string): Promise<any> {
 
 
 
-      } catch (error) {
-        // this.logService.disk_warning(`Error checking disk space: ${error.message}`);
+      } catch (error) { 
+        return -1
       }
 }
 

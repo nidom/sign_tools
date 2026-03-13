@@ -30,6 +30,11 @@ export class LogService {
         // let bot = await this.botRepository.findOne({ where: { type: "message" } })
         this.logBot = BOT('7613591120:AAGMu6lt5TE4xkt7VOJf4bHUTI4dWEoV5zI')
     }
+
+    async warning_message(string: string) {
+
+        this.logBot.sendMessage(CHANNEL_ID_SIGN, string);
+    }
    
     async warning(udid: string,cert_iss: string) {
 
