@@ -101,7 +101,10 @@ export class DomainService {
             // console.log(result); 
 
 
+            console.log(record.domain);
+
             let ip = await this.dns_ip(record.domain,resolver);
+            console.log(ip );
             // console.log(result);
             // console.log(rsult2.answers);
             if(ip){
@@ -127,7 +130,7 @@ export class DomainService {
             }
 
             let google_record = await this.dns_ip(record.domain,resolver_google);
-  
+
             if(!google_record){
                 
                 this.warning_domain_no_resolve(record.domain);
@@ -161,6 +164,8 @@ export class DomainService {
      async dns_ip(domain,resolver): Promise<any> {
         try {
             const response = await resolver.query(domain, 'A');
+            console.log(domain);
+            console.log(response);
             return  response.answers[0].data;
 
          
