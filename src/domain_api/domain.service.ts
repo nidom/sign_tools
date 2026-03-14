@@ -122,15 +122,18 @@ export class DomainService {
                 // console.log(record.domain + '无解析');
 
                 //二次校验域名是否被封禁
-                let repeat_ip = await this.dns_ip(record.domain,resolver_google);
-  
-                if(!repeat_ip){
-                    this.warning_domain_no_resolve(record.domain);
-
-                }
-
+         
           
             }
+
+            let google_record = await this.dns_ip(record.domain,resolver_google);
+  
+            if(!google_record){
+                
+                this.warning_domain_no_resolve(record.domain);
+
+            }
+
 
             if(record.ip != record.ip){
                 record.ip = record.ip;

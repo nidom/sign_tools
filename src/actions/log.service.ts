@@ -26,8 +26,8 @@ export class LogService {
     }
     
     private async init() {
-    
-        // let bot = await this.botRepository.findOne({ where: { type: "message" } })
+
+        //let bot = await this.botRepository.findOne({ where: { type: "message" } })
         this.logBot = BOT('7613591120:AAGMu6lt5TE4xkt7VOJf4bHUTI4dWEoV5zI')
     }
 
