@@ -99,12 +99,7 @@ export class DomainService {
 
             // const result = await lookup(record.domain,{family: 4});
             // console.log(result); 
-
-
-            console.log(record.domain);
-
             let ip = await this.dns_ip(record.domain,resolver);
-            console.log(ip );
             // console.log(result);
             // console.log(rsult2.answers);
             if(ip){
@@ -129,15 +124,14 @@ export class DomainService {
           
             }
 
+            //检测域名有没有被封禁
             let google_record = await this.dns_ip(record.domain,resolver_google);
 
             if(!google_record){
                 
                 this.warning_domain_no_resolve(record.domain);
-
             }
-
-
+            
             if(record.ip != record.ip){
                 record.ip = record.ip;
                 await this.twDomainRepository.save(record);
