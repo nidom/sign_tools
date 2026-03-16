@@ -120,8 +120,6 @@ export class DomainService {
                 // console.log(record.domain + '无解析');
 
                 //二次校验域名是否被封禁
-         
-          
             }
 
             //检测域名有没有被封禁
@@ -131,7 +129,7 @@ export class DomainService {
                 
                 this.warning_domain_no_resolve(record.domain);
             }
-            
+
             if(record.ip != record.ip){
                 record.ip = record.ip;
                 await this.twDomainRepository.save(record);
@@ -188,12 +186,9 @@ export class DomainService {
             }
         });
         return new CResult(0, '', records);
-
-     }
-
+    }
 
     async add_domain(domain: string): Promise<any> {
-
 
         // 判断domain是否合法
         // 域名一般只允许字母、数字、短横线，并以字母或数字开头结尾，中间可以有点

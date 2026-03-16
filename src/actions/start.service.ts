@@ -17,8 +17,8 @@ export class StartService implements OnApplicationBootstrap {
 
    //应用启动后执行
   async onApplicationBootstrap() {
-
-    console.log('数据缓存加载成功')
+    
+    console.log('启动成功')
   }
   
 
