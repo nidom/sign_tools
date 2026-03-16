@@ -24,5 +24,11 @@ export class  SuperSignEntity extends SharedEntity {
   @Column({ comment: '	status' })
   status: number;
 
+  @Column({ comment: 'update_time' })
+  update_time	: number;
+
+  
+
+
 
 }

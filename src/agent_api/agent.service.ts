@@ -27,10 +27,8 @@ export class AgentService {
 
 
     async user_list(aget_role): Promise<any> {
-
-
+        
         let agent_role_record = await this.agentRepository.findOne({where: {role_id: aget_role}});
-
         if(!agent_role_record){
           return new CResult(-1, '代理不存在', {});
         }
@@ -39,7 +37,6 @@ export class AgentService {
         let user_ids = agent_user_list.map(item => item.user_id);
 
         let user_list = await this.userRepository.find({where: {id: In(user_ids)}});
-
         let results = [];
         for (let item of user_list) {
         

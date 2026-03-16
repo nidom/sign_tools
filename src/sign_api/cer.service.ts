@@ -49,9 +49,7 @@ export class CerService {
 
             await this.handle_cert(cert);
             await new Promise(resolve => setTimeout(resolve, 2000));
-
-
-        }
+         }
 
         // await this.handle_cert(certs[0]);
     }
@@ -71,7 +69,6 @@ export class CerService {
 
         console.log(firstPart);
         let dircetory = `/www/wwwroot/iosxapp.com/data/cert/${firstPart}`;
-
         // INSERT_YOUR_CODE
         // 获取dircetory下所有.cer结尾的文件路径 放到一个数组
         let cerFiles: string[] = [];

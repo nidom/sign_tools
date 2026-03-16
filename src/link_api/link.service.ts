@@ -14,16 +14,12 @@ export class LinkService {
     constructor(
         @InjectRepository(SignConfigEntity)
         private readonly signConfigRepository: Repository<SignConfigEntity>,
-
-        
     ) { }
 
     async app_link(app_id: string): Promise<any> {
         // const client = await this.clientService.ossClient();
         // const result = await client.get('link.json');
         // return result;
-
-        
         if(isEmpty(app_id)){
 
             return new CResult(-1, 'url error', {});

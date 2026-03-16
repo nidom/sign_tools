@@ -84,8 +84,7 @@ export class UDIDMonitorService {
       // console.log(record.udid)
 
        await this.sign_udid_check(record);
-
-      }
+       }
 
 
 
@@ -179,8 +178,22 @@ export class UDIDMonitorService {
       return;
     }
 
+          // INSERT_YOUR_CODE
+      // 获取当前时间戳，精确到秒
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+   
+      //5s内新建的 不检测
+      if(currentTimestamp - record.update_time < 5){
+
+        return;
+
+      }
+
     //卡了 把所有预定证书关闭 并预警
     if (record.type == 0 && record.status == 0 && isEmpty(record.cert_iss)) {
+
+
+
 
       console.log('所有预定证书已关闭');
 
@@ -206,6 +219,15 @@ export class UDIDMonitorService {
 
     }
   }
+
+  //延迟检测
+  async sign_udid_check_aciton(record: SuperSignEntity): Promise<any> {
+
+
+
+
+  }
+
 
 
   //证书警告

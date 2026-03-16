@@ -32,7 +32,7 @@ export class SignController {
 
         return await this.cerService.monitor_cert();
     }
-
+    
     //删除超级缓存的旧文件
     @Get('clean_old_files')
     async clean_old_files(@Req() request: Request): Promise<any> {
