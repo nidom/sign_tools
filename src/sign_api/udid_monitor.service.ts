@@ -181,6 +181,9 @@ export class UDIDMonitorService {
           // INSERT_YOUR_CODE
       // 获取当前时间戳，精确到秒
       const currentTimestamp = Math.floor(Date.now() / 1000);
+      console.log(currentTimestamp );
+
+      console.log(currentTimestamp - record.update_time);
    
       //5s内新建的 不检测
       if(currentTimestamp - record.update_time < 5){
