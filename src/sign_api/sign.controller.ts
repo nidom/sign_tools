@@ -25,7 +25,6 @@ export class SignController {
         private readonly cerService: CerService,
     ) { }
 
-
     //监控 cer 有没有被移出
     @Get('monitor_cert')
     async monitor_cert(@Req() request: Request): Promise<any> {

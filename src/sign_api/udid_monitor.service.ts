@@ -77,17 +77,13 @@ export class UDIDMonitorService {
       take: 20
     });
 
-
-
     for (let record of latestSignRecords) {
 
       // console.log(record.udid)
 
-       await this.sign_udid_check(record);
-       }
-
-
-
+      await this.sign_udid_check(record);
+       
+    }
   }
 
   async udid_test(udid: string): Promise<any> {
@@ -101,28 +97,23 @@ export class UDIDMonitorService {
     }
 
     let result = await this.udid_check(record);
-
-
-
     // console.log('--------------------------------');
     // console.log(result);
     if (result == 'process') {
 
       return "卡设备了"
     } else if (result == 'complete') {
+
       return "没有卡设备"
     }
 
   }
-
-
 
   async udid_check(record: SuperDeviceEntity): Promise<any> {
 
 
     let result = null;
     let dircetory = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}`;
-
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {
@@ -167,7 +158,6 @@ export class UDIDMonitorService {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     return result;
-
   }
 
   //签名队列检查
@@ -178,7 +168,7 @@ export class UDIDMonitorService {
       return;
     }
 
-          // INSERT_YOUR_CODE
+      // INSERT_YOUR_CODE
       // 获取当前时间戳，精确到秒
       const currentTimestamp = Math.floor(Date.now() / 1000);
       console.log(currentTimestamp );
@@ -194,9 +184,6 @@ export class UDIDMonitorService {
 
     //卡了 把所有预定证书关闭 并预警
     if (record.type == 0 && record.status == 0 && isEmpty(record.cert_iss)) {
-
-
-
 
       console.log('所有预定证书已关闭');
 
@@ -225,8 +212,6 @@ export class UDIDMonitorService {
 
   //延迟检测
   async sign_udid_check_aciton(record: SuperSignEntity): Promise<any> {
-
-
 
 
   }
