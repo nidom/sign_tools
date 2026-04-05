@@ -110,13 +110,11 @@ export class CerService {
     }
 
     async parse(cerFile: string): Promise<any> {
-
-
-
+       
         try {
+
             let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
             // const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
-
             // INSERT_YOUR_CODE
             // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
             const { spawnSync } = require('child_process');

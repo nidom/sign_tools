@@ -81,7 +81,7 @@ export class UDIDMonitorService {
 
       // console.log(record.udid)
 
-      await this.sign_udid_check(record);
+      // await this.sign_udid_check(record);
        
     }
   }
