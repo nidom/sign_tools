@@ -128,6 +128,7 @@ export class DomainService {
             //检测域名有没有被封禁
             let google_record_ip = await this.dns_ip(record.domain,resolver_google);
             let cloudflare_record_ip = await this.dns_ip(record.domain,resolver_cloudflare);
+            //google和 cf 都没有记录了 就报警
             if((!google_record_ip) && (!cloudflare_record_ip) ){
                 
                 this.warning_domain_no_resolve(record.domain);
