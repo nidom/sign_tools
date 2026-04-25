@@ -128,13 +128,9 @@ export class DomainService {
             //检测域名有没有被封禁
             let google_record_ip = await this.dns_ip(record.domain,resolver_google);
             let cloudflare_record_ip = await this.dns_ip(record.domain,resolver_cloudflare);
-            if(!google_record_ip){
-                if(!cloudflare_record_ip){
-                    //如果台湾的也没有记录 就报警
-                    if(!hinet_record_ip){
-                        this.warning_domain_no_resolve(record.domain);
-                    }
-                }
+            if((!google_record_ip) && (!cloudflare_record_ip) ){
+                
+                this.warning_domain_no_resolve(record.domain);
             }
 
 
