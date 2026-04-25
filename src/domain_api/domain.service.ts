@@ -87,8 +87,9 @@ export class DomainService {
         
         // 使用自定义 fetch 初始化 dohjs 解析器
         // 使用 Cloudflare 的 DoH 服务作为上游 resolver
-        const resolver = new doh.DohResolver('https://dns.hinet.net/dns-query', customFetch);
+        const resolver_hinet = new doh.DohResolver('https://dns.hinet.net/dns-query', customFetch);
         const resolver_google = new doh.DohResolver('https://dns.google/dns-query');
+        const resolver_cloudflare = new doh.DohResolver('https://1.1.1.1/dns-query');
 
         // 执行 DoH 查询
    
@@ -99,20 +100,22 @@ export class DomainService {
 
             // const result = await lookup(record.domain,{family: 4});
             // console.log(result); 
-            let ip = await this.dns_ip(record.domain,resolver);
+            let hinet_record_ip= await this.dns_ip(record.domain,resolver_hinet);
             // console.log(result);
             // console.log(rsult2.answers);
-            if(ip){
+            if(hinet_record_ip){
 
-                if(ip == '182.173.0.181'){
+                if(hinet_record_ip == '182.173.0.181'){
                     record.ip = '182.173.0.181';
                     //预警
                     this.warning_domain(record.domain);
                  }else{
-                    record.ip = ip;
+                    record.ip = hinet_record_ip;
                  }
                 await this.twDomainRepository.save(record);
             } else {
+                
+                
                 //无解析
                 // record.ip = '';
                 // await this.twDomainRepository.save(record);
@@ -123,12 +126,17 @@ export class DomainService {
             }
 
             //检测域名有没有被封禁
-            let google_record = await this.dns_ip(record.domain,resolver_google);
-
-            if(!google_record){
-                
-                this.warning_domain_no_resolve(record.domain);
+            let google_record_ip = await this.dns_ip(record.domain,resolver_google);
+            let cloudflare_record_ip = await this.dns_ip(record.domain,resolver_cloudflare);
+            if(!google_record_ip){
+                if(!cloudflare_record_ip){
+                    //如果台湾的也没有记录 就报警
+                    if(!hinet_record_ip){
+                        this.warning_domain_no_resolve(record.domain);
+                    }
+                }
             }
+
 
             if(record.ip != record.ip){
                 record.ip = record.ip;
