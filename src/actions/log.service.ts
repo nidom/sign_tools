@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { BOT } from '../general/bot';
 
 //错误
-const CHANNEL_ID_SIGN = -4963596903 //多点云系统异常预警
+const CHANNEL_ID_SIGN = -1003967655213 //多点云系统异常预警
 
 
 

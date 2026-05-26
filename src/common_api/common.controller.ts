@@ -20,7 +20,7 @@ export class CommonController {
 
         return await this.commonService.resetToken(requestDto.params, request);
     }
-
+    
     @Post('reset_redis_cache')
     async resetRedisCache(@Body() requestDto: RequestDto, @Req() request: Request): Promise<any> {
 
