@@ -144,10 +144,12 @@ export class CerService {
 
                 return 0
             }
+             console.log(stdout);
+
+
 
 
             return -1
-            // console.log(stdout);
 
             // INSERT_YOUR_CODE
 
