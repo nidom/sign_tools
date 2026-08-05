@@ -136,34 +136,16 @@ export class CerService {
                 cerFile,
                 '-noout',
                 '-ocsp_uri',
-                '-issuer',
+            
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result2 = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
 
-            // let url = result2.stdout.trim();
-            console.log(result2)
+            let url = result2.stdout.trim();
+            // console.log(result2)
             // let issuer = result2.stdout.trim();
             // console.log(issuer)
-
-
-
-           
-
-
-
-            return
-
-
-
-
-
-            
-
-
-
-
 
             console.log(cerFile)
             let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
@@ -176,7 +158,7 @@ export class CerService {
                 '-issuer', '/www/wwwroot/AppleWWDRCAG3.pem',
                 '-cert', cerFile,
                 '-text',
-                '-url', ''
+                '-url', url
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
@@ -203,7 +185,7 @@ export class CerService {
 
 
 
-            // return -1
+            return -1
 
             
 
