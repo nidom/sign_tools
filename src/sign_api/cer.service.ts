@@ -148,11 +148,14 @@ export class CerService {
             // console.log(issuer)
 
             console.log(cerFile)
-            let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
+            // let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
             // const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
             // INSERT_YOUR_CODE
             // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
             // const { spawnSync } = require('child_process');
+
+            console.log(url)
+            
             const args = [
                 'ocsp',
                 '-issuer', '/www/wwwroot/AppleWWDRCAG3.cer',
@@ -164,7 +167,7 @@ export class CerService {
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
-            console.log(result)
+            // console.log(result)
             let stdout = '';
             if (result.error) {
                 throw result.error;
