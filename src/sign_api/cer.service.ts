@@ -136,6 +136,7 @@ export class CerService {
                 cerFile,
                 '-noout',
                 '-ocsp_uri',
+                '-issuer',
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result2 = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
@@ -143,6 +144,21 @@ export class CerService {
 
             let url = result2.stdout.trim();
             console.log(url)
+            let issuer = result2.stdout.trim();
+            console.log(issuer)
+
+            return
+
+
+           
+
+
+
+
+
+
+
+            
 
 
 
