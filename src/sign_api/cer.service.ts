@@ -147,7 +147,6 @@ export class CerService {
             let issuer = result2.stdout.trim();
             console.log(issuer)
 
-            return
 
 
            
