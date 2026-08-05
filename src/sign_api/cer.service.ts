@@ -154,7 +154,7 @@ export class CerService {
 
 
             return
-            
+
 
 
 
@@ -176,7 +176,7 @@ export class CerService {
                 '-issuer', '/www/wwwroot/AppleWWDRCAG3.pem',
                 '-cert', cerFile,
                 '-text',
-                '-url', url
+                '-url', ''
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
