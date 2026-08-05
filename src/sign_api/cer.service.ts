@@ -140,7 +140,9 @@ export class CerService {
             // 使用 spawnSync 并调整 maxBuffer
             const result2 = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
+
             let url = result2.stdout.trim();
+            console.log(url)
 
 
 
@@ -184,7 +186,7 @@ export class CerService {
 
 
 
-            return -1
+            // return -1
 
             
 
