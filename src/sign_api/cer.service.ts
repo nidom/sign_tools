@@ -159,7 +159,8 @@ export class CerService {
                 '-cert', cerFile,
                 '-text',
                 '-url', url,
-                '-no_nonce'
+                '-no_nonce',
+                '-noverify'
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
