@@ -142,10 +142,10 @@ export class CerService {
             const result2 = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
 
-            let url = result2.stdout.trim();
-            console.log(url)
-            let issuer = result2.stdout.trim();
-            console.log(issuer)
+            // let url = result2.stdout.trim();
+            console.log(result2)
+            // let issuer = result2.stdout.trim();
+            // console.log(issuer)
 
 
 
@@ -153,6 +153,8 @@ export class CerService {
 
 
 
+            return
+            
 
 
 
