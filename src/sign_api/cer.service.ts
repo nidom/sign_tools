@@ -12,6 +12,8 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 import { LogService } from 'src/actions/log.service';
 import { Not } from 'typeorm';
+import { execFile } from 'node:child_process';
+const { spawnSync } = require('child_process');
 @Injectable()
 export class CerService {
 
@@ -113,45 +115,77 @@ export class CerService {
        
         try {
 
-            let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
-            // const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
-            // INSERT_YOUR_CODE
-            // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
-            const { spawnSync } = require('child_process');
-            const cmd = 'openssl';
-            const args = [
-                'ocsp',
-                '-issuer', '/www/wwwroot/AppleWWDRCAG3.pem',
-                '-cert', cerFile,
-                '-text',
-                '-url', 'http://ocsp2.apple.com'
+
+            // const { stdout2 } = await execFileAsync('openssl', [
+            //     'x509',
+            //     '-in',
+            //     cerFile,
+            //     '-noout',
+            //     '-ocsp_uri',
+            //   ]);
+            
+            //   const ocspUrl = stdout.trim();
+
+
+
+                      // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
+            const cmd2 = 'openssl';
+            const args2 = [
+                'x509',
+                '-in',
+                cerFile,
+                '-noout',
+                '-ocsp_uri',
             ];
             // 使用 spawnSync 并调整 maxBuffer
-            const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
+            const result2 = spawnSync(cmd2, args2, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
-            console.log(result)
-            let stdout = '';
-            if (result.error) {
-                throw result.error;
-            } else {
-                stdout = result.stdout;
-            }
-
-            if (stdout.includes('good')) {
-
-                return 1
-            }
-
-            if (stdout.includes('revoked')) {
-
-                return 0
-            }
-            //  console.log(stdout);
+            console.log(result2)
 
 
 
 
-            return -1
+
+            // console.log(cerFile)
+            // let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
+            // // const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
+            // // INSERT_YOUR_CODE
+            // // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
+            // // const { spawnSync } = require('child_process');
+            // const cmd = 'openssl';
+            // const args = [
+            //     'ocsp',
+            //     '-issuer', '/www/wwwroot/AppleWWDRCAG3.pem',
+            //     '-cert', cerFile,
+            //     '-text',
+            //     '-url', 'http://ocsp2.apple.com'
+            // ];
+            // // 使用 spawnSync 并调整 maxBuffer
+            // const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
+
+            // console.log(result)
+            // let stdout = '';
+            // if (result.error) {
+            //     throw result.error;
+            // } else {
+            //     stdout = result.stdout;
+            // }
+
+            // if (stdout.includes('good')) {
+
+            //     return 1
+            // }
+
+            // if (stdout.includes('revoked')) {
+
+            //     return 0
+            // }
+            // //  console.log(stdout);
+
+
+
+
+            // return -1
 
             // INSERT_YOUR_CODE
 
