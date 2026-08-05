@@ -128,6 +128,8 @@ export class CerService {
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
+
+            console.log(result)
             let stdout = '';
             if (result.error) {
                 throw result.error;
@@ -144,7 +146,7 @@ export class CerService {
 
                 return 0
             }
-             console.log(stdout);
+            //  console.log(stdout);
 
 
 
