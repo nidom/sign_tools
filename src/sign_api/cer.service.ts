@@ -155,12 +155,11 @@ export class CerService {
             // const { spawnSync } = require('child_process');
             const args = [
                 'ocsp',
-                '-issuer', '/www/wwwroot/AppleWWDRCAG3.pem',
+                '-issuer', '/www/wwwroot/AppleWWDRCAG3.cer',
                 '-cert', cerFile,
-                '-text',
+                '-resp_text',
                 '-url', url,
                 '-no_nonce',
-                '-noverify'
             ];
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
