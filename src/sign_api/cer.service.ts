@@ -181,7 +181,7 @@ export class CerService {
                 '-no_nonce',
             ];
 
-            return ;
+       
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
@@ -196,6 +196,7 @@ export class CerService {
           
             if (stdout.includes('good')) {
 
+                console.log('good')
                 return 1
             }
 
