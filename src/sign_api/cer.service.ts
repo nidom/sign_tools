@@ -167,14 +167,14 @@ export class CerService {
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
-            // console.log(result)
+            console.log(result)
             let stdout = '';
             if (result.error) {
                 throw result.error;
             } else {
                 stdout = result.stdout;
             }
-
+          
             if (stdout.includes('good')) {
 
                 return 1
@@ -186,16 +186,9 @@ export class CerService {
             }
             //  console.log(stdout);
 
-
-
-
             return -1
 
             
-
-
-
-
         } catch (error) {
             return -1
         }
