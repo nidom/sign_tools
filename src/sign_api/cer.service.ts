@@ -184,7 +184,7 @@ export class CerService {
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
             
-            console.log(result)
+            // console.log(result)
             let stdout = '';
             if (result.error) {
                 throw result.error;
