@@ -138,11 +138,27 @@ export class CerService {
                 '-ocsp_uri',
             
             ];
+
+
+            const args_get_issuer = [
+                'x509',
+                '-in',
+                cerFile,
+                '-noout',
+                '-issuer',
+            
+            ];
+
             // 使用 spawnSync 并调整 maxBuffer
-            const result2 = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
+            const url_resul = spawnSync(cmd, args_get_url, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
+            const issuer_result = spawnSync(cmd, args_get_issuer, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
 
-            let url = result2.stdout.trim();
+            let url = url_resul.stdout.trim();
+            let issuer = issuer_result.stdout.trim();
+            console.log(url)
+            console.log(issuer)
+
             // console.log(result2)
             // let issuer = result2.stdout.trim();
             // console.log(issuer)
@@ -167,6 +183,7 @@ export class CerService {
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
+            
             console.log(result)
             let stdout = '';
             if (result.error) {
