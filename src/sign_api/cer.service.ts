@@ -180,6 +180,8 @@ export class CerService {
                 '-url', url,
                 '-no_nonce',
             ];
+
+            return ;
             // 使用 spawnSync 并调整 maxBuffer
             const result = spawnSync(cmd, args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 });
 
