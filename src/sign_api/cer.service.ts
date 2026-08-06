@@ -32,10 +32,10 @@ export class CerService {
     async monitor_cert(): Promise<any> {
 
         let certs = await this.superCertRepository.find(
-            {
-                where: { status: Not(2) }
+            // {
+            //     where: { status: Not(2) }
 
-            }
+            // }
 
         );
 
