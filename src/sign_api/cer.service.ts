@@ -32,10 +32,10 @@ export class CerService {
     async monitor_cert(): Promise<any> {
 
         let certs = await this.superCertRepository.find(
-            // {
-            //     where: { status: Not(2) }
+            {
+                where: { status: Not(2) }
 
-            // }
+            }
 
         );
 
@@ -156,21 +156,21 @@ export class CerService {
 
             let url = url_resul.stdout.trim();
             let issuer = issuer_result.stdout.trim();
-            console.log(url)
-            console.log(issuer)
+            // console.log(url)
+            // console.log(issuer)
 
             // console.log(result2)
             // let issuer = result2.stdout.trim();
             // console.log(issuer)
 
-            console.log(cerFile)
+            // console.log(cerFile)
             // let path = 'openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert ' + cerFile + '  -text -url http://ocsp.apple.com '
             // const stdout = execSync('openssl ocsp -issuer  /www/wwwroot/AppleWWDRCAG3.pem -cert '+cerFile+'  -text -url http://ocsp.apple.com ', { encoding: 'utf8' });
             // INSERT_YOUR_CODE
             // 解决 openssl stdout 输出内容不全问题，使用 spawn 代替 execSync
             // const { spawnSync } = require('child_process');
 
-            console.log(url)
+            // console.log(url)
             
             const args = [
                 'ocsp',
