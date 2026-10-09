@@ -113,14 +113,14 @@ export class UDIDMonitorService {
 
 
     let result = null;
-    let dircetory = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}`;
+    let dircetory = `/www/wwwroot/fenfa/data/udidcert/${record.udid}`;
     // 获取dircetory下后缀为mobileprovision的文件
     let mobileprovisionFiles: string[] = [];
     if (fs.existsSync(dircetory) && fs.statSync(dircetory).isDirectory()) {
 
       mobileprovisionFiles = fs.readdirSync(dircetory).filter(file => file.endsWith('.mobileprovision'))
       let mobileprovisionFile = mobileprovisionFiles[0];
-      let filePath = `/www/wwwroot/iosxapp.com/data/udidcert/${record.udid}/${mobileprovisionFile}`;
+      let filePath = `/www/wwwroot/fenfa/data/udidcert/${record.udid}/${mobileprovisionFile}`;
       provisioning(filePath, (parseError, provisionData) => {
         //  console.log( provisionData );
 

@@ -41,7 +41,7 @@ export class DiskService {
   // INSERT_YOUR_CODE
   async cleanOldFiles(): Promise<void> {
 
-    let dirPath = '/www/wwwroot/iosxapp.com/data/uploads/super_sign_ipa'
+    let dirPath = '/www/wwwroot/fenfa/data/uploads/super_sign_ipa'
     const fs = require('fs');
     const path = require('path');
     try {
