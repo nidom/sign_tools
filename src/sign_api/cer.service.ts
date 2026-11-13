@@ -69,8 +69,8 @@ export class CerService {
             firstPart = parts[0];
         }
 
-        console.log(firstPart);
-        let dircetory = `/www/wwwroot/iosxapp.com/data/cert/${firstPart}`;
+        // console.log(firstPart);
+        let dircetory = `/www/wwwroot/fenfa/data/cert/${firstPart}`;
         // INSERT_YOUR_CODE
         // 获取dircetory下所有.cer结尾的文件路径 放到一个数组
         let cerFiles: string[] = [];
@@ -194,6 +194,7 @@ export class CerService {
                 stdout = result.stdout;
             }
           
+            console.log(stdout)
             if (stdout.includes('good')) {
 
                 console.log('good')
@@ -201,6 +202,7 @@ export class CerService {
             }
 
             if (stdout.includes('revoked')) {
+                console.log('good')
 
                 return 0
             }
