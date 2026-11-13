@@ -194,7 +194,7 @@ export class CerService {
                 stdout = result.stdout;
             }
           
-            console.log(stdout)
+            // console.log(stdout)
             if (stdout.includes('good')) {
 
                 console.log('good')
